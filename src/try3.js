@@ -1,10 +1,11 @@
-'''
+/*
 The try3 gets the open textboxes in Gmail each time the
 user makes click and prints it in the console.
-'''
+*/
 
 var gmail_textbox_key = "Am Al editable LW-avf"; //could change
 var textboxesList = [];
+
 
 function getTextboxes(key){
 	//select all the open textboxes

@@ -1,7 +1,20 @@
 {
  "name": "PGProject",
- "version": "pre-alpha",
+ "version": "0.2",
+ "version_name": "pre-alpha",
  "description": "Empty description",
 
- "manifest_version": 2
+ "manifest_version": 2,
+
+  "content_scripts": [
+	  {
+	  	"matches": ["https://mail.google.com/mail/*"],
+	  	"js": ["try3.js"]
+	  }
+  ],
+
+ "permissions": [
+    "tabs"
+ ]
+
 }

@@ -3,7 +3,8 @@ Try7 - Follows the try6 approach
 Adds basic functionality to the main button.
 */
 
-var gmail_textbox_class = "Am Al editable LW-avf";
+//var gmail_textbox_class = "Am Al editable LW-avf";
+var gmail_textbox_class = "Al editable LW-avf";
 var gmail_textbox_table_class = "cf An";
 var color = "LightSteelBlue";
 
@@ -153,8 +154,40 @@ function text_is(text){
 	}
 }
 
-function createDiv(){
-	text = "Asdasdasd"; // JUST FOR TESTING.
+function encrypt(text){
+	// TO DO
+
+	var enc = "ENCRYPTED - " + text;
+
+	return enc;
+}
+
+function sign(text){
+	// TO DO
+
+	var sig = "SIGNED - " + text;
+
+	return sig;
+}
+
+function decrypt(text){
+	// TO DO
+
+	var dec = "DECRYPTED - " + text;
+
+	return dec;
+}
+
+function unsign(text){
+	// TO DO
+
+	var uns = "UNSIGNED - " + text;;
+
+	return uns;
+}
+
+function createDiv(t){
+	var tb = getTbFromTbTable(t);
 
 	var div = document.createElement("div");
 	div.type = "div";
@@ -184,20 +217,7 @@ function createDiv(){
 		if (div.getAttribute("pgproject") != "true") {
 			//buttons are hidden
 
-			/*
-			switch(expression) {
-			    case n:
-			        code block
-			        break;
-			    case n:
-			        code block
-			        break;
-			    default:
-			        default code block
-			}
-			*/
-
-			switch(text_is(text)){
+			switch(text_is(tb.innerText)){
 				case "signed":
 					b2.style.display = "flex";
 					b5.style.display = "flex";
@@ -223,12 +243,6 @@ function createDiv(){
 			}
 
 			div.setAttribute("pgproject", "true");
-
-			/*
-			b2.style.display = "flex";
-			b3.style.display = "flex";
-			div.setAttribute("pgproject", "true");
-			*/
 		
 		} else {
 			//buttons are visible	
@@ -241,15 +255,59 @@ function createDiv(){
 		}
 	}
 
+	b2.onclick = function(){
+		// Encrypt
+		var enc = encrypt(tb.innerText);
+
+		tb.innerText = enc;
+	}
+
+	b3.onclick = function(){
+		// Sign
+		var sig = sign(tb.innerText);
+
+		tb.innerText = sig;
+	}
+
+	b4.onclick = function(){
+		// Decrypt
+		var dec = decrypt(tb.innerText);
+
+		tb.innerText = dec;
+	}
+
+	b5.onclick = function(){
+		// Delete signature
+		var uns = unsign(tb.innerText);
+
+		tb.innerText = uns;
+	}
+
 	return div;
 }
 
-function insertDiv(table){
+function insertDiv(t){
 
-	div = createDiv();
+	var div = createDiv(t);
 
-	reference = table.childNodes[0];
-	table.insertBefore(div,reference);
+	reference = t.childNodes[0];
+	t.insertBefore(div,reference);
+}
+
+function getTbFromTbTable(tbTable) {
+	//new mail:
+	//tb2 = t2.childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0]
+	//response:
+	//tb1 = t1.childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0]
+
+	tb = tbTable.childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0];
+
+	if (tb.className.indexOf(gmail_textbox_class) == -1) {
+		tb = tb.childNodes[0];
+	}
+
+	return tb;
+	//return tb.innerText;
 }
 
 
@@ -277,3 +335,4 @@ window.addEventListener("click",function(){
 		}
 	}
 });
+

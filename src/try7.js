@@ -9,36 +9,22 @@ var color = "LightSteelBlue";
 
 var debug = true;
 
+/*
 function getTextboxes(tb_class){
 	//select all the open textboxes
 
 	textboxesList = document.getElementsByClassName(tb_class);
-	if (debug == true) {
+	if (debug) {
 		console.log("getTextboxes returns:");
 		console.log(textboxesList);
 	}
 	return textboxesList;
 }
+*/
 
 function getTbTables(tbTable_class){
 	tbTablesList = document.getElementsByClassName(tbTable_class);
 	return tbTablesList;
-}
-
-function isSigned(text){
-	if (debug == true){
-		console.log("isSigned")
-	}
-
-	// TO DO
-}
-
-function isEncrypted(text){
-	if (debug == true){
-		console.log("isEncrypted")
-	}
-
-	// TO DO
 }
 
 function createButton_b1(){
@@ -53,7 +39,7 @@ function createButton_b1(){
     button.style.paddingRight = "10px";
     button.style.height = "29px"; //using the 25x25 icon
 
-	if (debug == true){
+	if (debug){
 		console.log("createButton_b1 returns:");
 		console.log(button);
 	}
@@ -70,7 +56,7 @@ function createButton_b2(){
 	//button.style.backgroundColor = color;
 	button.innerText = "Cifrar";
 
-	if (debug == true){
+	if (debug){
 		console.log("createButton_b2 returns:");
 		console.log(button);
 	}
@@ -87,16 +73,90 @@ function createButton_b3(){
 	//button.style.backgroundColor = color;
 	button.innerText = "Firmar";
 
-	if (debug == true){
+	if (debug){
 		console.log("createButton_b3 returns:");
 		console.log(button);
 	}
 	return button;
 }
 
+// Decrypt button
+function createButton_b4(){
+	button = document.createElement("button");
+	button.className = "pgproject_b4"
+	button.type = "button";
+	button.style.float = "right";
+	button.style.display = "none";
+	//button.style.backgroundColor = color;
+	button.innerText = "Descifrar";
+
+	if (debug){
+		console.log("createButton_b4 returns:");
+		console.log(button);
+	}
+	return button;
+}
+
+// Delete signature button
+function createButton_b5(){
+	button = document.createElement("button");
+	button.className = "pgproject_b5"
+	button.type = "button";
+	button.style.float = "right";
+	button.style.display = "none";
+	//button.style.backgroundColor = color;
+	button.innerText = "Eliminar firma";
+
+	if (debug){
+		console.log("createButton_b5 returns:");
+		console.log(button);
+	}
+	return button;
+}
+
+function isSigned(text){
+	if (debug){
+		console.log("isSigned")
+	}
+
+	// TO DO
+
+	return false;
+}
+
+function isEncrypted(text){
+	if (debug){
+		console.log("isEncrypted")
+	}
+
+	// TO DO
+
+	return false;
+}
+
+function text_is(text){
+
+	if (isEncrypted(text)){
+		if (isSigned(text)){
+			//signed + encrypted
+			return "signed+encrypted";
+		} else {
+			//encrypted
+			return "encrypted";
+		}
+	} else if (isSigned(text)){
+		// signed
+		return "signed";
+	} else {
+		// plain
+		return "plain";
+	}
+}
 
 function createDiv(){
-	div = document.createElement("div");
+	text = "Asdasdasd"; // JUST FOR TESTING.
+
+	var div = document.createElement("div");
 	div.type = "div";
 	div.className = "pgproject_tb_bar"
 
@@ -111,14 +171,72 @@ function createDiv(){
 	var b3 = createButton_b3();
 	div.appendChild(b3);
 
+	// Decrypt
+	var b4 = createButton_b4();
+	div.appendChild(b4);
+
+	// Delete signature
+	var b5 = createButton_b5();
+	div.appendChild(b5);
+
 	b1.onclick = function(){
+		//pgproject true means that the buttons are visible
 		if (div.getAttribute("pgproject") != "true") {
+			//buttons are hidden
+
+			/*
+			switch(expression) {
+			    case n:
+			        code block
+			        break;
+			    case n:
+			        code block
+			        break;
+			    default:
+			        default code block
+			}
+			*/
+
+			switch(text_is(text)){
+				case "signed":
+					b2.style.display = "flex";
+					b5.style.display = "flex";
+					break;
+				case "encrypted":
+					b3.style.display = "flex";
+					b4.style.display = "flex";
+					break;
+				case "signed+encrypted": // check how works this option
+					b4.style.display = "flex";
+					b5.style.display = "flex";
+					break;
+				case "plain":
+					b2.style.display = "flex";
+					b3.style.display = "flex";
+					break;
+				default:
+					// error
+					if (debug) {
+						console.log("PGProject: Switch error in createDiv");
+					}
+					break;
+			}
+
+			div.setAttribute("pgproject", "true");
+
+			/*
 			b2.style.display = "flex";
 			b3.style.display = "flex";
 			div.setAttribute("pgproject", "true");
+			*/
+		
 		} else {
+			//buttons are visible	
+
 			b2.style.display = "none";
 			b3.style.display = "none";
+			b4.style.display = "none";
+			b5.style.display = "none";
 			div.setAttribute("pgproject", "false");
 		}
 	}
@@ -135,12 +253,12 @@ function insertDiv(table){
 }
 
 
-if (debug == true){
+if (debug){
 	console.log("PGProject started")
 }
 
 window.addEventListener("click",function(){
-	if (debug == true){
+	if (debug){
 		console.log("click")
 	}
 
@@ -152,6 +270,7 @@ window.addEventListener("click",function(){
 		t.style.backgroundColor = color;
 
 		// pgproject indicates when the button already exists in this table
+		// (it's a string)
 		if (t.getAttribute("pgproject") != "true") {
 			insertDiv(t);
 			t.setAttribute("pgproject", "true");

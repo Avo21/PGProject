@@ -6,6 +6,7 @@ Adds basic functionality to the main button.
 //var gmail_textbox_class = "Am Al editable LW-avf";
 var gmail_textbox_class = "Al editable LW-avf";
 var gmail_textbox_table_class = "cf An";
+var gmail_inbox_class = "adn ads";
 var color = "LightSteelBlue";
 
 var debug = true;
@@ -26,6 +27,11 @@ function getTextboxes(tb_class){
 function getTbTables(tbTable_class){
 	tbTablesList = document.getElementsByClassName(tbTable_class);
 	return tbTablesList;
+}
+
+function getInbox(inbox_class){
+	inboxList = document.getElementsByClassName(inbox_class);
+	return inboxList;
 }
 
 function createButton_b1(){
@@ -286,12 +292,39 @@ function createDiv(t){
 	return div;
 }
 
+function createDivInbox(inbox){
+
+	var div = document.createElement("div");
+	div.type = "div";
+	div.className = "pgproject_inbox_bar";
+	div.style.backgroundColor = color;
+
+
+	div.style.height = "29px"; //using the 25x25 icon
+
+
+	var b1 = createButton_b1();
+	div.appendChild(b1);
+
+	return div;
+}
+
 function insertDiv(t){
 
 	var div = createDiv(t);
 
 	reference = t.childNodes[0];
 	t.insertBefore(div,reference);
+}
+
+function insertDivInbox(i){
+
+	var div = createDivInbox(i);
+
+	parent = i.childNodes[1].childNodes[6];
+	reference = parent.childNodes[0];
+
+	parent.insertBefore(div,reference);
 }
 
 function getTbFromTbTable(tbTable) {
@@ -321,6 +354,7 @@ window.addEventListener("click",function(){
 	}
 
 	tbTablesList = getTbTables(gmail_textbox_table_class);
+	inboxList = getInbox(gmail_inbox_class);
 
 	for (i = 0; i< tbTablesList.length; i++){
 		
@@ -334,5 +368,17 @@ window.addEventListener("click",function(){
 			t.setAttribute("pgproject", "true");
 		}
 	}
-});
 
+	for (j = 0; j< inboxList.length; j++){
+		
+		i = inboxList[j];
+
+		// pgproject indicates when the button already exists in this inbox mail
+		// (it's a string)
+		if (i.getAttribute("pgproject") != "true") {
+			insertDivInbox(i);
+			i.setAttribute("pgproject", "true");
+		}
+	}
+
+});

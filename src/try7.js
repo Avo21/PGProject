@@ -121,6 +121,23 @@ function createButton_b5(){
 	return button;
 }
 
+// Verify signature button
+function createButton_b6(){
+	button = document.createElement("button");
+	button.className = "pgproject_b6"
+	button.type = "button";
+	button.style.float = "right";
+	button.style.display = "none";
+	//button.style.backgroundColor = color;
+	button.innerText = "Verificar firma";
+
+	if (debug){
+		console.log("createButton_b6 returns:");
+		console.log(button);
+	}
+	return button;
+}
+
 function isSigned(text){
 	if (debug){
 		console.log("isSigned")
@@ -138,7 +155,7 @@ function isEncrypted(text){
 
 	// TO DO
 
-	return false;
+	return true;
 }
 
 function text_is(text){
@@ -187,9 +204,17 @@ function decrypt(text){
 function unsign(text){
 	// TO DO
 
-	var uns = "UNSIGNED - " + text;;
+	var uns = "UNSIGNED - " + text;
 
 	return uns;
+}
+
+function verify(text){
+	// TO DO
+
+	var ver = "VERIFIED - " + text;
+
+	return ver;
 }
 
 function createDiv(t){
@@ -294,6 +319,10 @@ function createDiv(t){
 
 function createDivInbox(inbox){
 
+	//text = "caca"; //for testing
+	//i.childNodes[1].childNodes[6].innerText
+	var tb = inbox.childNodes[1].childNodes[6].childNodes[0];
+
 	var div = document.createElement("div");
 	div.type = "div";
 	div.className = "pgproject_inbox_bar";
@@ -305,6 +334,66 @@ function createDivInbox(inbox){
 
 	var b1 = createButton_b1();
 	div.appendChild(b1);
+
+	// Decrypt
+	var b4 = createButton_b4();
+	div.appendChild(b4);
+
+	// Verify signature
+	var b6 = createButton_b6();
+	div.appendChild(b6);
+
+	b1.onclick = function(){
+		//pgproject true means that the buttons are visible
+		if (div.getAttribute("pgproject") != "true") {
+			//buttons are hidden
+
+			switch(text_is(tb.innerText)){
+				case "signed":
+					b6.style.display = "flex";
+					break;
+				case "encrypted":
+					b4.style.display = "flex";
+					break;
+				case "signed+encrypted": // check how works this option
+					b4.style.display = "flex";
+					b6.style.display = "flex";
+					break;
+				case "plain":
+					// to do
+					break;
+				default:
+					// error
+					if (debug) {
+						console.log("PGProject: Switch error in createDivInbox");
+					}
+					break;
+			}
+
+			div.setAttribute("pgproject", "true");
+		
+		} else {
+			//buttons are visible	
+
+			b4.style.display = "none";
+			b6.style.display = "none";
+			div.setAttribute("pgproject", "false");
+		}
+	}
+
+	b4.onclick = function(){
+		// Decrypt
+		var dec = decrypt(tb.innerText);
+
+		tb.innerText = dec;
+	}
+
+	b6.onclick = function(){
+		// Verify signature
+		var ver = verify(tb.innerText);
+
+		tb.innerText = ver;
+	}
 
 	return div;
 }
@@ -325,13 +414,14 @@ function insertDivInbox(i){
 	reference = parent.childNodes[0];
 
 	parent.insertBefore(div,reference);
+
+	reference.style.backgroundColor = "white";
+	reference.style.marginLeft = "1px";
+	reference.style.marginRight = "1px";
+	parent.style.backgroundColor = color;
 }
 
 function getTbFromTbTable(tbTable) {
-	//new mail:
-	//tb2 = t2.childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0]
-	//response:
-	//tb1 = t1.childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0].childNodes[0]
 
 	tb = tbTable.childNodes[0].childNodes[0].childNodes[1].childNodes[1].childNodes[0];
 

@@ -1,27 +1,6 @@
 /*
-Try7 - Follows the try6 approach
-Adds basic functionality to the main button.
-*/
+Html.js - 
 
-//var gmail_textbox_class = "Am Al editable LW-avf";
-var gmail_textbox_class = "Al editable LW-avf";
-var gmail_textbox_table_class = "cf An";
-var gmail_inbox_class = "adn ads";
-var color = "LightSteelBlue";
-
-var debug = true;
-
-/*
-function getTextboxes(tb_class){
-	//select all the open textboxes
-
-	textboxesList = document.getElementsByClassName(tb_class);
-	if (debug) {
-		console.log("getTextboxes returns:");
-		console.log(textboxesList);
-	}
-	return textboxesList;
-}
 */
 
 function getTbTables(tbTable_class){
@@ -138,85 +117,6 @@ function createButton_b6(){
 	return button;
 }
 
-function isSigned(text){
-	if (debug){
-		console.log("isSigned")
-	}
-
-	// TO DO
-
-	return false;
-}
-
-function isEncrypted(text){
-	if (debug){
-		console.log("isEncrypted")
-	}
-
-	// TO DO
-
-	return true;
-}
-
-function text_is(text){
-
-	if (isEncrypted(text)){
-		if (isSigned(text)){
-			//signed + encrypted
-			return "signed+encrypted";
-		} else {
-			//encrypted
-			return "encrypted";
-		}
-	} else if (isSigned(text)){
-		// signed
-		return "signed";
-	} else {
-		// plain
-		return "plain";
-	}
-}
-
-function encrypt(text){
-	// TO DO
-
-	var enc = "ENCRYPTED - " + text;
-
-	return enc;
-}
-
-function sign(text){
-	// TO DO
-
-	var sig = "SIGNED - " + text;
-
-	return sig;
-}
-
-function decrypt(text){
-	// TO DO
-
-	var dec = "DECRYPTED - " + text;
-
-	return dec;
-}
-
-function unsign(text){
-	// TO DO
-
-	var uns = "UNSIGNED - " + text;
-
-	return uns;
-}
-
-function verify(text){
-	// TO DO
-
-	var ver = "VERIFIED - " + text;
-
-	return ver;
-}
-
 function createDiv(t){
 	var tb = getTbFromTbTable(t);
 
@@ -319,8 +219,6 @@ function createDiv(t){
 
 function createDivInbox(inbox){
 
-	//text = "caca"; //for testing
-	//i.childNodes[1].childNodes[6].innerText
 	var tb = inbox.childNodes[1].childNodes[6].childNodes[0];
 
 	var div = document.createElement("div");
@@ -432,43 +330,3 @@ function getTbFromTbTable(tbTable) {
 	return tb;
 	//return tb.innerText;
 }
-
-
-if (debug){
-	console.log("PGProject started")
-}
-
-window.addEventListener("click",function(){
-	if (debug){
-		console.log("click")
-	}
-
-	tbTablesList = getTbTables(gmail_textbox_table_class);
-	inboxList = getInbox(gmail_inbox_class);
-
-	for (i = 0; i< tbTablesList.length; i++){
-		
-		t = tbTablesList[i];
-		t.style.backgroundColor = color;
-
-		// pgproject indicates when the button already exists in this table
-		// (it's a string)
-		if (t.getAttribute("pgproject") != "true") {
-			insertDiv(t);
-			t.setAttribute("pgproject", "true");
-		}
-	}
-
-	for (j = 0; j< inboxList.length; j++){
-		
-		i = inboxList[j];
-
-		// pgproject indicates when the button already exists in this inbox mail
-		// (it's a string)
-		if (i.getAttribute("pgproject") != "true") {
-			insertDivInbox(i);
-			i.setAttribute("pgproject", "true");
-		}
-	}
-
-});

@@ -2,7 +2,7 @@
  "name": "PGProject",
  "version": "0.2",
  "version_name": "pre-alpha",
- "description": "Empty description",
+ "description": "PGP in Gmail straight from your browser! PGProject allows you to encrypt and sign your mails.",
 
  "manifest_version": 2,
 

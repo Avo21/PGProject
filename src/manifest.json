@@ -13,7 +13,7 @@
 			"pgproject.js",
 			"html.js",
 			"pgp.js",
-			"openpgp.js"]
+			"openpgp/openpgp.js"]
 	  }
   ],
 

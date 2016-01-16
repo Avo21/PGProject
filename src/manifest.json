@@ -12,7 +12,8 @@
 	  	"js": [
 			"pgproject.js",
 			"html.js",
-			"pgp.js"]
+			"pgp.js",
+			"openpgp.js"]
 	  }
   ],
 

@@ -3,6 +3,32 @@ PGP.js -
 
 */
 
+function newKeyPair(keyring){
+
+	var options = {
+		numBits: 2048,
+		userId: 'Test User <testuser@testserver.com>',
+		passphrase: 'abcd1234567890'
+	};
+
+	openpgp.generateKeyPair(options).then(function(keyPair) {
+
+		// private key = keyPair.privateKeyArmored
+		// public key = keyPair.publicKeyArmored
+
+		keyring.privateKeys.importKey(keyPair.privateKeyArmored);
+		keyring.publicKeys.importKey(keyPair.publicKeyArmored);
+		keyring.store();
+
+	}).catch(function(error) {
+		
+		//TO DO ERROR
+
+		console.log(error);
+	});
+
+}
+
 function isSigned(text){
 	if (debug){
 		console.log("isSigned")

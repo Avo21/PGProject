@@ -3,17 +3,28 @@ Pgproject.js (main) -
 
 */
 
-//var gmail_textbox_class = "Am Al editable LW-avf";
 var gmail_textbox_class = "Al editable LW-avf";
 var gmail_textbox_table_class = "cf An";
 var gmail_inbox_class = "adn ads";
 var color = "LightSteelBlue";
 
 var debug = true;
+var keyring;
 
 if (debug){
-	console.log("PGProject started")
+	console.log("PGProject started");
 }
+
+window.onload = function() {
+	if (keyring == undefined) {
+		keyring = generateKeyring();
+	}
+
+	// testing. newKeyPair function must be called from a form in a configuration page
+	keyring.clear();
+	newKeyPair(keyring);
+}
+
 
 window.addEventListener("click",function(){
 	if (debug){

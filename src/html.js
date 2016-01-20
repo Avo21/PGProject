@@ -188,9 +188,7 @@ function createDiv(t){
 
 	b2.onclick = function(){
 		// Encrypt
-		var enc = encrypt(tb.innerText);
-
-		tb.innerText = enc;
+		encrypt(tb);
 	}
 
 	b3.onclick = function(){

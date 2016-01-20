@@ -3,6 +3,24 @@ PGP.js -
 
 */
 
+// create keyring and import keys from localstore
+function generateKeyring(){
+	var keyring = new openpgp.Keyring();
+	
+	if (debug){
+		console.log("generateKeyRing");
+		console.log(keyring);
+		console.log(keyring.getAllKeys());
+	}
+
+	return keyring;
+}
+
+
+/* TO DO
+Store ENCRYPTED keys (specially the private one)
+Error
+*/
 function newKeyPair(keyring){
 
 	var options = {
@@ -12,7 +30,6 @@ function newKeyPair(keyring){
 	};
 
 	openpgp.generateKeyPair(options).then(function(keyPair) {
-
 		// private key = keyPair.privateKeyArmored
 		// public key = keyPair.publicKeyArmored
 
@@ -20,13 +37,29 @@ function newKeyPair(keyring){
 		keyring.publicKeys.importKey(keyPair.publicKeyArmored);
 		keyring.store();
 
-	}).catch(function(error) {
-		
-		//TO DO ERROR
+		if (debug){
+			console.log("newKeyPair: ");
+			console.log(keyPair.privateKeyArmored);
+			console.log(keyPair.publicKeyArmored);
+		}
 
+	}).catch(function(error) {
 		console.log(error);
 	});
+}
 
+function getPublicKeysByEmail(email){
+	var keyArray = keyring.publicKeys;
+	var keys = keyArray.getForAddress(email);
+
+	return keys;
+}
+
+function getPrivateKeysByEmail(email){
+	var keyArray = keyring.privateKeys;
+	var keys = keyArray.getForAddress(email);
+
+	return keys;
 }
 
 function isSigned(text){
@@ -46,7 +79,7 @@ function isEncrypted(text){
 
 	// TO DO
 
-	return true;
+	return false;
 }
 
 function text_is(text){
@@ -68,18 +101,42 @@ function text_is(text){
 	}
 }
 
-function encrypt(text){
-	// TO DO
+/* TO DO:
+email by parameter
+more than one email address
+error
+*/ 
+function encrypt(textbox){
 
-	var enc = "ENCRYPTED - " + text;
+	email = "testuser@testserver.com";
+	var pubKeys = getPublicKeysByEmail(email);
 
-	return enc;
+	openpgp.encryptMessage(pubKeys, textbox.innerText).then(function(pgpMessage) {
+	    // success
+	    textbox.innerText = pgpMessage;
+
+	}).catch(function(error) {
+	    // failure
+	    // TO DO
+
+	    if(debug){
+	    	console.log("Error: encrypting message");
+	    }
+	});
 }
 
 function sign(text){
 	// TO DO
 
-	var sig = "SIGNED - " + text;
+	var sig = "SIGNED - " + text; //temporal simulation
+
+	/*
+
+	key = getPrivateKey(); // FROM
+
+	msg = openpgp_sign(); // if promises -> then (please no!)
+
+	*/
 
 	return sig;
 }
@@ -87,7 +144,32 @@ function sign(text){
 function decrypt(text){
 	// TO DO
 
-	var dec = "DECRYPTED - " + text;
+	var dec = "DECRYPTED - " + text; //temporal simulation
+
+	/*
+
+	key = getPrivateKey(); // TO
+
+	msg = openpgp_decrypt(); // if promises -> then (please no!)
+
+	*/
+
+	/*
+
+	var key = '-----BEGIN PGP PRIVATE KEY BLOCK ... END PGP PRIVATE KEY BLOCK-----';
+	var privateKey = openpgp.key.readArmored(key).keys[0];
+	privateKey.decrypt('passphrase');
+
+	var pgpMessage = '-----BEGIN PGP MESSAGE ... END PGP MESSAGE-----';
+	pgpMessage = openpgp.message.readArmored(pgpMessage);
+
+	openpgp.decryptMessage(privateKey, pgpMessage).then(function(plaintext) {
+	    // success
+	}).catch(function(error) {
+	    // failure
+	});
+
+	*/
 
 	return dec;
 }
@@ -95,7 +177,13 @@ function decrypt(text){
 function unsign(text){
 	// TO DO
 
-	var uns = "UNSIGNED - " + text;
+	var uns = "UNSIGNED - " + text; //temporal simulation
+
+	/*
+
+	Is unsign just deleting the signature?
+
+	*/
 
 	return uns;
 }
@@ -103,7 +191,15 @@ function unsign(text){
 function verify(text){
 	// TO DO
 
-	var ver = "VERIFIED - " + text;
+	var ver = "VERIFIED - " + text; //temporal simulation
+
+	/*
+
+	key = getPublicKey(); // FROM
+
+	msg = openpgp_verify(); // if promises -> then (please no!)
+
+	*/
 
 	return ver;
 }

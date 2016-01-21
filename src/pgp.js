@@ -64,9 +64,59 @@ function getPrivateKeysByEmail(email, password){
 	return keys;
 }
 
+/* TO DO:
+Clean console log messages
+When the signed message is just a part of the text
+Multiple signed messages
+Check if beginSig is in the right place
+*/
 function isSigned(text){
 
-	// TO DO
+	begin = text.indexOf("-----BEGIN PGP SIGNED MESSAGE-----");
+	beginSig = text.indexOf("-----BEGIN PGP SIGNATURE-----");
+	endSig = text.indexOf("-----END PGP SIGNATURE-----");
+
+	if (begin != -1 && beginSig != -1 && endSig != -1 ){ //begin, beginSig and endSig exists
+		if (begin == 0){ //begin is at the beginning of the text
+			if ((text.length - "-----END PGP SIGNATURE-----".length -1) == endSig){ //endSig is at the ending of the text
+
+				if (debug){
+					console.log("Next text isSigned: true");
+					console.log(text);
+				}				
+
+				return true;
+			}
+			if (debug) {
+				console.log("isSigned error: 1 - EndSig");
+			}
+		}
+		if (debug) {
+			console.log("isSigned error: 2 - Begin");
+		}
+	}
+	if (debug) {
+		console.log("isSigned error: 3 - Begin, beginSig or endSig don't exist");
+	}
+
+	if (debug) {
+		console.log("begin: ");
+		console.log(begin);
+		console.log("beginSig: ");
+		console.log(beginSig);
+		console.log("endSig: ");
+		console.log(endSig);
+
+		console.log("text length:");
+		console.log(text.length);
+		console.log("-----END PGP SIGNATURE-----.length :");
+		console.log("-----END PGP SIGNATURE-----".length);
+		console.log("resta:");
+		console.log((text.length - "-----END PGP SIGNATURE-----".length -1));
+		console.log("endSig:");
+		console.log(endSig);
+	}
+
 
 	return false;
 }
@@ -168,6 +218,7 @@ function encrypt(textbox){
 }
 
 /* TO DO:
+it introduces one line break before signed text (delete it)
 email and password by parameter
 more than one email address
 error

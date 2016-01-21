@@ -193,9 +193,7 @@ function createDiv(t){
 
 	b3.onclick = function(){
 		// Sign
-		var sig = sign(tb.innerText);
-
-		tb.innerText = sig;
+		sign(tb);
 	}
 
 	b4.onclick = function(){

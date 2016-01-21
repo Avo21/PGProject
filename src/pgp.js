@@ -16,11 +16,6 @@ function generateKeyring(){
 	return keyring;
 }
 
-
-/* TO DO
-Store ENCRYPTED keys (specially the private one)
-Error
-*/
 function newKeyPair(keyring){
 
 	var options = {
@@ -44,6 +39,7 @@ function newKeyPair(keyring){
 		}
 
 	}).catch(function(error) {
+		//TO DO
 		console.log(error);
 	});
 }
@@ -55,9 +51,15 @@ function getPublicKeysByEmail(email){
 	return keys;
 }
 
-function getPrivateKeysByEmail(email){
+//gets private keys with decrypted secret data
+function getPrivateKeysByEmail(email, password){
+
 	var keyArray = keyring.privateKeys;
 	var keys = keyArray.getForAddress(email);
+
+	for(i=0;i<keys.length;i++){
+		keys[i].decrypt(password);
+	}
 
 	return keys;
 }
@@ -125,20 +127,31 @@ function encrypt(textbox){
 	});
 }
 
-function sign(text){
-	// TO DO
+/* TO DO:
+email and password by parameter
+more than one email address
+error
+*/
+function sign(textbox){
+	// signClearMessage(privateKeys, text)
 
-	var sig = "SIGNED - " + text; //temporal simulation
+	email = "testuser@testserver.com";
+	password = "abcd1234567890";
 
-	/*
+	var privKeys = getPrivateKeysByEmail(email, password);
 
-	key = getPrivateKey(); // FROM
+	openpgp.signClearMessage(privKeys, textbox.innerText).then(function(pgpMessage) {
+	    // success
+	    textbox.innerText = pgpMessage;
 
-	msg = openpgp_sign(); // if promises -> then (please no!)
+	}).catch(function(error) {
+	    // failure
+	    // TO DO
 
-	*/
-
-	return sig;
+	    if(debug){
+	    	console.log("Error: signing message");
+	    }
+	});
 }
 
 function decrypt(text){

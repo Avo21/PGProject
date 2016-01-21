@@ -65,31 +65,71 @@ function getPrivateKeysByEmail(email, password){
 }
 
 function isSigned(text){
-	if (debug){
-		console.log("isSigned")
-	}
 
 	// TO DO
 
 	return false;
 }
 
+/* TO DO:
+Clean console log messages
+When the encrypted message is just a part of the text
+Multiple encrypted messages
+*/
 function isEncrypted(text){
-	if (debug){
-		console.log("isEncrypted")
+
+	begin = text.indexOf("-----BEGIN PGP MESSAGE-----");
+	end = text.indexOf("-----END PGP MESSAGE-----");
+
+	if ((begin != -1) && (end != -1)){ //begin and end exists
+		if (begin == 0){ //begin is at the beginning of the text
+			if ((text.length - "-----END PGP MESSAGE-----".length -1) == end){ //end is at the ending of the text
+				
+				if (debug){
+					console.log("Next text isEncrypted: true");
+					console.log(text);
+				}
+				
+				return true;
+			}
+			if (debug) {
+				console.log("isEncrypted error: 1 - End");
+			}
+		}
+		if (debug) {
+			console.log("isEncrypted error: 2 - Begin");
+		}
+	}
+	if (debug) {
+		console.log("isEncrypted error: 3 - Begin or end don't exist");
 	}
 
-	// TO DO
+	if (debug) {
+		console.log("begin: ");
+		console.log(begin);
+		console.log("end: ");
+		console.log(end);
+
+		console.log("text length:");
+		console.log(text.length);
+		console.log("-----END PGP MESSAGE-----.length :");
+		console.log("-----END PGP MESSAGE-----".length);
+		console.log("resta:");
+		console.log((text.length - "-----END PGP MESSAGE-----".length -1));
+		console.log("end:");
+		console.log(end);
+	}
 
 	return false;
 }
 
+// TO DO: Signed and Encrypted
 function text_is(text){
 
 	if (isEncrypted(text)){
 		if (isSigned(text)){
 			//signed + encrypted
-			return "signed+encrypted";
+			return "signed+encrypted"; //Check how works signing and encrypting
 		} else {
 			//encrypted
 			return "encrypted";

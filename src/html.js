@@ -118,6 +118,16 @@ function createButton_b6(){
 }
 
 function createDiv(t){
+
+	function hideAllButtons(){
+		b2.style.display = "none";
+		b3.style.display = "none";
+		b4.style.display = "none";
+		b5.style.display = "none";
+		
+		div.setAttribute("pgproject", "false");
+	}
+
 	var tb = getTbFromTbTable(t);
 
 	var div = document.createElement("div");
@@ -178,38 +188,45 @@ function createDiv(t){
 		} else {
 			//buttons are visible	
 
-			b2.style.display = "none";
-			b3.style.display = "none";
-			b4.style.display = "none";
-			b5.style.display = "none";
-			div.setAttribute("pgproject", "false");
+			hideAllButtons();
 		}
 	}
 
 	b2.onclick = function(){
 		// Encrypt
 		encrypt(tb);
+		hideAllButtons();
 	}
 
 	b3.onclick = function(){
 		// Sign
 		sign(tb);
+		hideAllButtons();
 	}
 
 	b4.onclick = function(){
 		// Decrypt
 		decrypt(tb);
+		hideAllButtons();
 	}
 
 	b5.onclick = function(){
 		// Delete signature
 		unsign(tb);
+		hideAllButtons();
 	}
 
 	return div;
 }
 
 function createDivInbox(inbox){
+
+	function hideAllButtons(){
+		b4.style.display = "none";
+		b6.style.display = "none";
+
+		div.setAttribute("pgproject", "false");
+	}
 
 	var tb = inbox.childNodes[1].childNodes[6].childNodes[0];
 
@@ -265,20 +282,20 @@ function createDivInbox(inbox){
 		} else {
 			//buttons are visible	
 
-			b4.style.display = "none";
-			b6.style.display = "none";
-			div.setAttribute("pgproject", "false");
+			hideAllButtons();
 		}
 	}
 
 	b4.onclick = function(){
 		// Decrypt
 		decrypt(tb);
+		hideAllButtons();
 	}
 
 	b6.onclick = function(){
 		// Verify signature
 		verify(tb);
+		hideAllButtons();
 	}
 
 	return div;

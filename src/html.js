@@ -198,16 +198,12 @@ function createDiv(t){
 
 	b4.onclick = function(){
 		// Decrypt
-		var dec = decrypt(tb.innerText);
-
-		tb.innerText = dec;
+		decrypt(tb);
 	}
 
 	b5.onclick = function(){
 		// Delete signature
-		var uns = unsign(tb.innerText);
-
-		tb.innerText = uns;
+		unsign(tb);
 	}
 
 	return div;
@@ -277,16 +273,12 @@ function createDivInbox(inbox){
 
 	b4.onclick = function(){
 		// Decrypt
-		var dec = decrypt(tb.innerText);
-
-		tb.innerText = dec;
+		decrypt(tb);
 	}
 
 	b6.onclick = function(){
 		// Verify signature
-		var ver = verify(tb.innerText);
-
-		tb.innerText = ver;
+		verify(tb);
 	}
 
 	return div;

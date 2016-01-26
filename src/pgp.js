@@ -60,6 +60,7 @@ function getPrivateKeysByEmail(email, password){
 	for(i=0;i<keys.length;i++){
 		keys[i].decrypt(password);
 	}
+	//keys.map(decrypt(password));
 
 	return keys;
 }
@@ -245,65 +246,88 @@ function sign(textbox){
 	});
 }
 
-function decrypt(text){
-	// TO DO
+/* TO DO:
+email and password by parameter
+more than one email address
+error
+*/
+function decrypt(textbox){
+	
+	email = "testuser@testserver.com";
+	password = "abcd1234567890";
 
-	var dec = "DECRYPTED - " + text; //temporal simulation
+	var privKeys = getPrivateKeysByEmail(email, password);
+	var privKey = privKeys[0];
 
-	/*
-
-	key = getPrivateKey(); // TO
-
-	msg = openpgp_decrypt(); // if promises -> then (please no!)
-
-	*/
-
-	/*
-
-	var key = '-----BEGIN PGP PRIVATE KEY BLOCK ... END PGP PRIVATE KEY BLOCK-----';
-	var privateKey = openpgp.key.readArmored(key).keys[0];
-	privateKey.decrypt('passphrase');
-
-	var pgpMessage = '-----BEGIN PGP MESSAGE ... END PGP MESSAGE-----';
+	var pgpMessage = textbox.innerText;
 	pgpMessage = openpgp.message.readArmored(pgpMessage);
 
-	openpgp.decryptMessage(privateKey, pgpMessage).then(function(plaintext) {
+	openpgp.decryptMessage(privKey, pgpMessage).then(function(plaintext) {
 	    // success
+	    textbox.innerText = plaintext;
+
 	}).catch(function(error) {
 	    // failure
+	    // TO DO
+
+	    if(debug){
+	    	console.log("Error: decrypting message");
+	    }
 	});
-
-	*/
-
-	return dec;
 }
 
-function unsign(text){
-	// TO DO
 
-	var uns = "UNSIGNED - " + text; //temporal simulation
+function unsign(textbox){
 
-	/*
+	var pgpMessage = textbox.innerText;
+	pgpMessage = openpgp.cleartext.readArmored(pgpMessage);
 
-	Is unsign just deleting the signature?
+	textbox.innerText = pgpMessage.text;
 
-	*/
-
-	return uns;
 }
 
-function verify(text){
-	// TO DO
 
-	var ver = "VERIFIED - " + text; //temporal simulation
+function verify(textbox){ //NOT WORKING
 
-	/*
+	email = "testuser@testserver.com";
+	var pubKeys = getPublicKeysByEmail(email);
 
-	key = getPublicKey(); // FROM
+	var pgpMessage = textbox.innerText;
+	pgpMessage = openpgp.cleartext.readArmored(pgpMessage);
 
-	msg = openpgp_verify(); // if promises -> then (please no!)
+	openpgp.verifyClearSignedMessage(pubKeys, pgpMessage).then(function(response) {
+	    // success
+	    
+	    /*
+	    response = {
+	    	Promise<{
+	    		text: String,
+	    		signatures: Array<{
+	    			keyid: module:type/keyid,
+	    			valid: Boolean
+	    		}>
+	    	}>
+	    }
+	    */
+	    console.log("verifyClearSignedMessage - response:");
+	    console.log(response);
+	    console.log(response.text);
+	    console.log(response.signatures);
+	    response.signatures.map(function(signature){
+	    	console.log("s");
+	    	console.log(signature);
+	    	console.log(signature.keyid);
+	    	console.log(signature.valid);
+	    });
 
-	*/
 
-	return ver;
+
+	}).catch(function(error) {
+	    // failure
+	    // TO DO
+
+	    if(debug){
+	    	console.log("Error: encrypting message");
+	    }
+	});
 }

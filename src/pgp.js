@@ -287,7 +287,14 @@ function unsign(textbox){
 }
 
 
-function verify(textbox){ //NOT WORKING
+/* TO DO:
+veriText could be in the pgproject div
+veriText could indicate the emails verified in the signature
+email by parameter
+more than one email address
+error
+*/
+function verify(textbox){
 
 	email = "testuser@testserver.com";
 	var pubKeys = getPublicKeysByEmail(email);
@@ -309,6 +316,18 @@ function verify(textbox){ //NOT WORKING
 	    	}>
 	    }
 	    */
+
+	    var veriText;
+	    // only for one signature
+	    if(response.signatures[0].valid == true){
+	    	veriText = "Signature verified -\n\n";
+	    } else{
+	    	veriText = "Unable to verify signature -\n\n";
+	    }
+
+	    textbox.innerText = veriText + response.text;
+
+	    /*
 	    console.log("verifyClearSignedMessage - response:");
 	    console.log(response);
 	    console.log(response.text);
@@ -318,7 +337,7 @@ function verify(textbox){ //NOT WORKING
 	    	console.log(signature);
 	    	console.log(signature.keyid);
 	    	console.log(signature.valid);
-	    });
+	    });*/
 
 
 

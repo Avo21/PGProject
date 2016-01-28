@@ -73,3 +73,12 @@
 .keyPart:last-child {
 	border-right: none;
 }
+.keyPart.name {
+	min-width: 120px;
+}
+.keyPart.mail {
+	min-width: 220px;
+}
+/*.keyPart.publicKey {
+	min-width: 100px;
+}*/

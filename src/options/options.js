@@ -67,8 +67,123 @@ function leftMenu(){
 	});
 }
 
+//TO DO
+function getPublicKeys(){
+
+/*
+<div class="keyPart name">Test User</div>
+<div class="keyPart mail">testuser@testserver.com</div>
+<div class="keyPart publicKey"> <a href="foo">See public key</a> </div>
+
+<div class="valid"></div>
+<div class="trust"></div>
+*/
+
+	var sampleKey1 = {
+		name : "Eric Clapton",
+		mail : "eric@gmail.com",
+		publicKey : "public key eric"
+	}
+
+	var sampleKey2 = {
+		name : "Bob Dylan",
+		mail : "bob@gmail.com",
+		publicKey : "public key bob"
+	}
+
+	var sampleKey3 = {
+		name : "Bruce Springsteen",
+		mail : "bruce@gmail.com",
+		publicKey : "public key bruce"
+	}
+
+	keys = [sampleKey1,sampleKey2,sampleKey3];
+
+	return keys;
+}
+
+//TO DO
+function getPrivateKeys(){
+
+	var sampleKey1 = {
+		name : "Eric Clapton",
+		mail : "eric@gmail.com",
+		privateKey : "private key eric"
+	}
+
+	keys = [sampleKey1];
+
+	return keys;
+}
+
+function loadPublicKey(key){
+
+	var div = document.createElement("div");
+	div.className = "key";
+
+	var divName = document.createElement("div");
+	divName.className = "keyPart name";
+	divName.innerText = key.name;
+	div.appendChild(divName);
+
+	var divMail = document.createElement("div");
+	divMail.className = "keyPart mail";
+	divMail.innerText = key.mail;
+	div.appendChild(divMail);
+
+	var divKey = document.createElement("div");
+	divKey.className = "keyPart publicKey";
+	divKey.innerText = key.publicKey;
+	div.appendChild(divKey);
+
+	var publicKeys = document.getElementById("publicKeys");
+	publicKeys.appendChild(div);
+}
+
+function loadPrivateKey(key){
+
+	var div = document.createElement("div");
+	div.className = "key";
+
+	var divName = document.createElement("div");
+	divName.className = "keyPart name";
+	divName.innerText = key.name;
+	div.appendChild(divName);
+
+	var divMail = document.createElement("div");
+	divMail.className = "keyPart mail";
+	divMail.innerText = key.mail;
+	div.appendChild(divMail);
+
+	var divKey = document.createElement("div");
+	divKey.className = "keyPart privateKey";
+	divKey.innerText = key.privateKey;
+	div.appendChild(divKey);
+
+	var privateKeys = document.getElementById("privateKeys");
+	privateKeys.appendChild(div);
+}
+
+function loadPublicKeys(){
+	keys = getPublicKeys();
+
+	keys.map(function(key){
+		loadPublicKey(key);
+	});
+}
+
+function loadPrivateKeys(){
+	keys = getPrivateKeys();
+
+	keys.map(function(key){
+		loadPrivateKey(key);
+	});
+}
+
 window.onload = function(){
 
 	leftMenu();
+	loadPublicKeys();
+	loadPrivateKeys();
 
 }

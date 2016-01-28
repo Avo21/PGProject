@@ -1,0 +1,75 @@
+#container {
+	display: flex;
+	min-width: 600px;
+	min-height: 400px;
+}
+.left {
+	float: left;
+	border-right-style: solid;
+	border-right-color: whitesmoke;
+	border-right-width: thin;
+	padding-right: 5px;
+}
+.option {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-right: 4px;
+	padding-left: 4px;
+	border-color: whitesmoke;
+}
+.option p {
+	margin: 0px;
+}
+#optionabout {
+	border-style: solid;
+	border-color: whitesmoke;
+}
+.option:hover {
+	background-color: whitesmoke;
+}
+/*.option:active {
+	background-color: snow;
+}*/
+
+
+.right {
+	float: right;
+	padding-left: 10px;
+}
+.right .about {
+
+}
+.right .keys {
+	display: none;
+}
+.right .configuration {
+	display: none;
+}
+#contact {
+	padding-left: 15px;
+}
+.keysList {
+	border: inset;
+	border-color: whitesmoke;
+	border-width: 2px;
+	margin-left: 15px;
+}
+.key {
+	padding: 4px;
+	border-width: thin;
+	border-style: solid;
+	border-color: whitesmoke;
+	display: flex;
+}
+.key:hover {
+	background-color: whitesmoke;
+}
+.keyPart {
+	padding: 4px;
+	border-width: thin;
+	border-right-style: solid;
+	border-right-color: whitesmoke;
+}
+.keyPart:last-child {
+	border-right: none;
+}

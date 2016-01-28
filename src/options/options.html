@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PGProject Options</title>
+
+  <link rel="stylesheet" type="text/css" href="options.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+  <div id="container">
+    <div class="left">
+
+      <div class="menu">
+        <div id="optionabout" class="option">
+          <p>About</p>
+        </div>
+        <div id="optionkeys" class="option">
+          <p>Keys</p>
+        </div>
+        <div id="optionconf" class="option">
+          <p>Configuration</p>
+        </div>
+      </div>
+
+     <!--  <button id="save">Save</button> -->
+
+    </div>
+    
+    <div class="right">
+
+      <div id="about" class="about">
+        <p><h1>About <b>PGProject</b></h1></p>
+        <p>
+          PGProject is a Google Chrome extension to use OpenPGP in Gmail straight from the browser. The software is currently in pre-alpha phase while its functionality is still under development.
+        </p>
+        <br>
+        <p><h1>License</h1></p>
+        <p>
+          PGProject is licensed under the <a href="https://github.com/Avo21/PGProject/blob/master/LICENSE">GNU GPLv2</a>.
+        </p>
+        <br>
+        <p><h1>Author</h1></p>
+        <p>
+          The software is being developed as a personal project by <a href="https://github.com/Avo21">Álvaro F. Faílde</a>.
+        </p>
+        <br>
+        <p><h1>Contact</h1></p>
+        <p>
+          If you find some security bug or you have any questions or suggestions, please contact me:
+          <br>
+          <div id="contact">
+            <i class="fa fa-envelope-o"></i> alvaro.failde@gmail.com
+            <br>
+            <i class="fa fa-twitter"></i> <a href="https://twitter.com/the_avo">@the_avo</a>
+        </div>
+        </p>
+      </div>
+
+      <div id="keys" class="keys">
+
+        <p><h1>Public keys</h1></p>
+        <!-- Manage keys:
+          Public keys: List, add, remove...
+          Private keys: List, add (import or create), remove... -->
+        <div class="keysList public">
+
+          <div class="key">
+            <!-- UserID = "Test User <testuser@testserver.com>"' -->
+            <div class="keyPart name">Test User</div>
+            <div class="keyPart mail">testuser@testserver.com</div>
+            <div class="keyPart publicKey"> <a href="foo">See public key</a> </div>
+            <!--
+            <div class="valid"></div>
+            <div class="trust"></div>
+            -->
+          </div>
+
+        </div>
+        
+        <br>
+        <p><h1>Private keys</h1></p>
+        <div class="keysList private">
+
+          <!-- <div class="key">
+            <div class="keyPart name">Test User</div>
+            <div class="keyPart mail">testuser@testserver.com</div>
+            <div class="keyPart privateKey"> See private key</div>
+          </div> -->
+
+        </div>
+
+      </div>
+
+      <div id="configuration" class="configuration">
+        <p><h1>Configuration</h1></p>
+        <p>
+          <!-- Configurate some options -->
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris a quam quis massa fringilla venenatis id et massa. In lacinia scelerisque ex vitae consectetur. Phasellus ac mi eget mi aliquam euismod. Vivamus quam sem, bibendum non faucibus non, viverra eget neque. Proin semper dapibus mi, id suscipit elit auctor dignissim. Integer feugiat eu turpis vel venenatis. Suspendisse consequat tempor leo, non hendrerit ligula mattis ullamcorper. Integer finibus eleifend velit.
+        </p>
+      </div>
+
+    </div>
+
+  <!--
+        <select id="Language">
+         <option value="english">english</option>
+         <option value="galego">galego</option>
+        </select>
+  -->
+
+    <script src="options.js"></script>
+  </div>
+</body>
+</html>

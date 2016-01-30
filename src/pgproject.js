@@ -23,6 +23,11 @@ window.onload = function() {
 	// testing. newKeyPair function must be called from a form in a configuration page
 	keyring.clear();
 	newKeyPair(keyring);
+
+
+
+	////
+	loadIconsStyle();
 }
 
 

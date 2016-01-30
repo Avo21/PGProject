@@ -28,7 +28,7 @@ function newKeyPair(keyring){
 		// private key = keyPair.privateKeyArmored
 		// public key = keyPair.publicKeyArmored
 
-		keyring.privateKeys.importKey(keyPair.privateKeyArmored);
+		keyring.privateKeys.importKey(keyPair.privateKeyArmored); // TO DO: To store private key ENCRYPTED
 		keyring.publicKeys.importKey(keyPair.publicKeyArmored);
 		keyring.store();
 
@@ -289,7 +289,7 @@ function unsign(textbox){
 
 /* TO DO:
 veriText could be in the pgproject div
-veriText could indicate the emails verified in the signature
+veriText could indicate the emails verified in the signature - verify icon in green?
 email by parameter
 more than one email address
 error

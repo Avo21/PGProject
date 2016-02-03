@@ -16,6 +16,11 @@ if (debug){
 }
 
 window.onload = function() {
+	
+	// Icons stylesheet
+	loadIconsStyle();
+
+	// Keys
 	if (keyring == undefined) {
 		keyring = generateKeyring();
 	}
@@ -24,10 +29,6 @@ window.onload = function() {
 	keyring.clear();
 	newKeyPair(keyring);
 
-
-
-	////
-	loadIconsStyle();
 }
 
 

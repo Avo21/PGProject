@@ -45,24 +45,15 @@ function createButton_opt(){
 		this.style.color = "initial";
 	}
 
-	// Can't use chrome.runtime.openOptionsPage from the content script
-	// TO DO: Use background.js and send messages
-	// If not, use just window.open and provide a better format to the options page
 	button.onclick = function(){
-		if (chrome.runtime.openOptionsPage) {
-		    // New way to open options pages, if supported (Chrome 42+).
-		    chrome.runtime.openOptionsPage();
-		} else {
-		    // Reasonable fallback.
-		    window.open(chrome.runtime.getURL('options/options.html'));
-  		}
+
+  		// message to the eventPage asking for options page
+		chrome.runtime.sendMessage({msg: "openOptionsPage"}, function(response) {
+			if (debug) {
+  				console.log("Response: " + response.msg);
+  			}
+		});
 	}
-
-	// button.style.backgroundColor = color;
-	// button.innerHTML = "<img src="+chrome.extension.getURL("dir img")+">";
-
-	//button.style.border = "0px";
-	//etc.
 
 	return button;
 }

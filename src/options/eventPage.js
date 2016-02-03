@@ -17,3 +17,13 @@ chrome.runtime.onMessage.addListener(
 		}	
 	}
 );
+
+chrome.runtime.onInstalled.addListener(
+	function(details){
+		if(details.reason == "install"){
+			// TO DO: Open page explaining some things (like how to add some keys)
+			// maybe integrated in options page
+			chrome.runtime.openOptionsPage();
+		}
+	}
+);

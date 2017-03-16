@@ -1,7 +1,107 @@
-/*
-Html.js - 
+var gmail_textbox_class = "Al editable LW-avf";
+var gmail_textbox_table_class = "cf An";
+var gmail_inbox_class = "adn ads";
+var color = "LightSteelBlue";
 
-*/
+var debug = true;
+//var keyring;
+
+
+
+//temporal, could be done in the eventPage
+window.onload = function() {
+	
+	// Icons stylesheet
+	loadIconsStyle();
+
+
+
+	toEventPage("initKeys"); //TO DO
+	
+	/*
+	// Keys
+	if (keyring == undefined) {
+		keyring = generateKeyring();
+	}
+
+	// testing. newKeyPair function must be called from a form in a configuration page
+	keyring.clear();
+	newKeyPair(keyring);
+	*/
+
+}
+
+
+// messages to the eventPage
+function toEventPage(message, textbox){
+	chrome.runtime.sendMessage({msg: message, cnt: textbox.innerText}, function(response){
+		if (debug) {
+			console.log("Message [" + message + "] sent from CS to EP");
+			console.log("--response from EP: " + response.msg);
+		}
+
+		if (response.cnt) {
+			replace(textbox, response);
+		}
+
+		//return response.cnt;
+	})
+}
+
+function replace(tb, resp){
+	tb.innerText = resp.cnt;
+}
+
+function loadIconsStyle(){
+	var link = document.createElement("link");
+	link.rel = "stylesheet";
+	link.href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css";
+	document.head.appendChild(link);
+}
+
+
+// temporal, must be done in a better way, and maybe in the eventPage
+window.addEventListener("click",function(){
+	if (debug){
+		console.log("click")
+	}
+
+	tbTablesList = getTbTables(gmail_textbox_table_class);
+	inboxList = getInbox(gmail_inbox_class);
+
+
+	for (i = 0; i< tbTablesList.length; i++){
+		
+		t = tbTablesList[i];
+		t.style.backgroundColor = color;
+
+		// pgproject indicates when the button already exists in this table
+		// (it's a string)
+		if (t.getAttribute("pgproject") != "true") {
+			insertDiv(t);
+			t.setAttribute("pgproject", "true");
+		}
+	}
+
+	for (j = 0; j< inboxList.length; j++){
+		
+		i = inboxList[j];
+
+		// pgproject indicates when the button already exists in this inbox mail
+		// (it's a string)
+		if (i.getAttribute("pgproject") != "true") {
+			insertDivInbox(i);
+			i.setAttribute("pgproject", "true");
+		}
+	}
+
+});
+
+
+
+
+/////// interacting with the website (old HTML.js)
+
 
 function getTbTables(tbTable_class){
 	tbTablesList = document.getElementsByClassName(tbTable_class);
@@ -13,12 +113,6 @@ function getInbox(inbox_class){
 	return inboxList;
 }
 
-function loadIconsStyle(){
-	var link = document.createElement("link");
-	link.rel = "stylesheet";
-	link.href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css";
-	document.head.appendChild(link);
-}
 
 // TO DO: Delete duplicated code creating buttons
 
@@ -47,12 +141,9 @@ function createButton_opt(){
 
 	button.onclick = function(){
 
-  		// message to the eventPage asking for options page
-		chrome.runtime.sendMessage({msg: "openOptionsPage"}, function(response) {
-			if (debug) {
-  				console.log("Response: " + response.msg);
-  			}
-		});
+
+		toEventPage("optionsPage");
+
 	}
 
 	return button;
@@ -298,25 +389,25 @@ function createDiv(t){
 
 	b2.onclick = function(){
 		// Encrypt
-		encrypt(tb);
+		toEventPage("encrypt", tb);//encrypt(tb);
 		hideAllButtons();
 	}
 
 	b3.onclick = function(){
 		// Sign
-		sign(tb);
+		toEventPage("sign", tb);//sign(tb);
 		hideAllButtons();
 	}
 
 	b4.onclick = function(){
 		// Decrypt
-		decrypt(tb);
+		toEventPage("decrypt", tb);//decrypt(tb);
 		hideAllButtons();
 	}
 
 	b5.onclick = function(){
 		// Delete signature
-		unsign(tb);
+		toEventPage("unsign", tb);//unsign(tb);
 		hideAllButtons();
 	}
 
@@ -398,13 +489,13 @@ function createDivInbox(inbox){
 
 	b4.onclick = function(){
 		// Decrypt
-		decrypt(tb);
+		toEventPage("decrypt", tb);//decrypt(tb);
 		hideAllButtons();
 	}
 
 	b6.onclick = function(){
 		// Verify signature
-		verify(tb);
+		toEventPage("verify", tb);//verify(tb);
 		hideAllButtons();
 	}
 
@@ -445,3 +536,137 @@ function getTbFromTbTable(tbTable) {
 	return tb;
 	//return tb.innerText;
 }
+
+
+///// about encryption (old PGP.js)
+
+
+/* TO DO:
+Clean console log messages
+When the signed message is just a part of the text
+Multiple signed messages
+Check if beginSig is in the right place
+*/
+function isSigned(text){
+
+	begin = text.indexOf("-----BEGIN PGP SIGNED MESSAGE-----");
+	beginSig = text.indexOf("-----BEGIN PGP SIGNATURE-----");
+	endSig = text.indexOf("-----END PGP SIGNATURE-----");
+
+	if (begin != -1 && beginSig != -1 && endSig != -1 ){ //begin, beginSig and endSig exists
+		if (begin == 0){ //begin is at the beginning of the text
+			if ((text.length - "-----END PGP SIGNATURE-----".length -1) == endSig){ //endSig is at the ending of the text
+
+				if (debug){
+					console.log("Next text isSigned: true");
+					console.log(text);
+				}				
+
+				return true;
+			}
+			if (debug) {
+				console.log("isSigned error: 1 - EndSig");
+			}
+		}
+		if (debug) {
+			console.log("isSigned error: 2 - Begin");
+		}
+	}
+	if (debug) {
+		console.log("isSigned error: 3 - Begin, beginSig or endSig don't exist");
+	}
+
+	if (debug) {
+		console.log("begin: ");
+		console.log(begin);
+		console.log("beginSig: ");
+		console.log(beginSig);
+		console.log("endSig: ");
+		console.log(endSig);
+
+		console.log("text length:");
+		console.log(text.length);
+		console.log("-----END PGP SIGNATURE-----.length :");
+		console.log("-----END PGP SIGNATURE-----".length);
+		console.log("resta:");
+		console.log((text.length - "-----END PGP SIGNATURE-----".length -1));
+		console.log("endSig:");
+		console.log(endSig);
+	}
+
+
+	return false;
+}
+
+/* TO DO:
+Clean console log messages
+When the encrypted message is just a part of the text
+Multiple encrypted messages
+*/
+function isEncrypted(text){
+
+	begin = text.indexOf("-----BEGIN PGP MESSAGE-----");
+	end = text.indexOf("-----END PGP MESSAGE-----");
+
+	if ((begin != -1) && (end != -1)){ //begin and end exists
+		if (begin == 0){ //begin is at the beginning of the text
+			if ((text.length - "-----END PGP MESSAGE-----".length -1) == end){ //end is at the ending of the text
+				
+				if (debug){
+					console.log("Next text isEncrypted: true");
+					console.log(text);
+				}
+				
+				return true;
+			}
+			if (debug) {
+				console.log("isEncrypted error: 1 - End");
+			}
+		}
+		if (debug) {
+			console.log("isEncrypted error: 2 - Begin");
+		}
+	}
+	if (debug) {
+		console.log("isEncrypted error: 3 - Begin or end don't exist");
+	}
+
+	if (debug) {
+		console.log("begin: ");
+		console.log(begin);
+		console.log("end: ");
+		console.log(end);
+
+		console.log("text length:");
+		console.log(text.length);
+		console.log("-----END PGP MESSAGE-----.length :");
+		console.log("-----END PGP MESSAGE-----".length);
+		console.log("resta:");
+		console.log((text.length - "-----END PGP MESSAGE-----".length -1));
+		console.log("end:");
+		console.log(end);
+	}
+
+	return false;
+}
+
+// TO DO: Signed and Encrypted
+function text_is(text){
+
+	if (isEncrypted(text)){
+		if (isSigned(text)){
+			//signed + encrypted
+			return "signed+encrypted"; //Check how works signing and encrypting
+		} else {
+			//encrypted
+			return "encrypted";
+		}
+	} else if (isSigned(text)){
+		// signed
+		return "signed";
+	} else {
+		// plain
+		return "plain";
+	}
+}
+

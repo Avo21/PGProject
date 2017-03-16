@@ -61,6 +61,10 @@
 	border-color: whitesmoke;
 	display: flex;
 }
+.button {
+    font-size: small;
+    float: right;
+}
 .key:hover {
 	background-color: whitesmoke;
 }

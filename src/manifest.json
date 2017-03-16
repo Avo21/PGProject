@@ -1,6 +1,6 @@
 {
  "name": "PGProject",
- "version": "0.2",
+ "version": "0.3",
  "version_name": "pre-alpha",
  "description": "PGP in Gmail straight from your browser! PGProject allows you to encrypt and sign your mails.",
 
@@ -9,11 +9,7 @@
   "content_scripts": [
 	  {
 	  	"matches": ["https://mail.google.com/mail/*"],
-	  	"js": [
-			"pgproject.js",
-			"html.js",
-			"pgp.js",
-			"openpgp/openpgp.js"]
+	  	"js": ["contentscript/contentScript.js"]
 	  }
   ],
 
@@ -32,7 +28,10 @@
   },
 
   "background": {
-    "scripts": ["options/eventPage.js"],
+    "scripts": [
+      "background/eventPage.js",
+      "background/pgproject.js",
+      "openpgp/openpgp.js"],
     "persistent": false
   }
 

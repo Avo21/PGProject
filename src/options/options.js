@@ -180,10 +180,42 @@ function loadPrivateKeys(){
 	});
 }
 
+
+function rightMenu(){
+	var addkey = document.getElementById("addkey");
+
+	addkey.addEventListener("click",function(){
+		// message to the eventPage asking for a new public key
+
+/*
+		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  			chrome.tabs.sendMessage(tabs[0].id, {msg: "addPublicKey"}, function(response) {
+    			console.log("msg addPublicKey enviado");
+  			});
+		});
+*/
+
+
+
+		chrome.runtime.sendMessage({msg: "addPublicKey"}, function(response) {
+
+			console.log("msg addPublicKey enviado");
+
+		// TO DO: Handle the response
+		});
+
+	});
+
+}
+
+
 window.onload = function(){
 
 	leftMenu();
 	loadPublicKeys();
 	loadPrivateKeys();
+
+	rightMenu();
+
 
 }

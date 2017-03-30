@@ -60,7 +60,20 @@
 
       <div id="keys" class="keys">
 
-        <p><h1>Public keys<button class="button" id="addkey">Add key</button></h1></p>
+        <div id="kmanager"> <h1>Keys manager</h1>
+          <button class="button" id="genkey">Generate my keys</button>
+          <button class="button" id="importmykey">Import my keys</button>
+          <button class="button" id="importkey">Import contact key</button>
+          <br>
+          <div id="generatekey" style="display: none;">
+            <input class="inputkey" type="text" name="name" placeholder="Name"></input>
+            <input id="inputemail" class="inputkey" type="text" name="email" placeholder="Email address"></input>
+            <input class="inputkey" type="password" name="pass" placeholder="Passphrase" ></input>
+            <button id="submit_gen" class="button">Generate!</button>
+          </div>
+        </div>
+
+        <p><h1>Public keys</h1></p>
         <!-- Manage keys:
           Public keys: List, add, remove...
           Private keys: List, add (import or create), remove... -->

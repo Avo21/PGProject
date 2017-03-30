@@ -34,7 +34,11 @@ window.onload = function() {
 
 // messages to the eventPage
 function toEventPage(message, textbox){
-	chrome.runtime.sendMessage({msg: message, cnt: textbox.innerText}, function(response){
+	var cnt = null;
+	if(textbox){
+		cnt = textbox.innerText;
+	}
+	chrome.runtime.sendMessage({msg: message, cnt: cnt}, function(response){
 		if (debug) {
 			console.log("Message [" + message + "] sent from CS to EP");
 			console.log("--response from EP: " + response.msg);

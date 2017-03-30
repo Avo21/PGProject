@@ -1,5 +1,7 @@
 var debug = true;
 
+
+
 chrome.runtime.onInstalled.addListener(
 	function(details){
 		if(details.reason == "install"){
@@ -130,6 +132,37 @@ chrome.runtime.onMessage.addListener(
 	    		sendResponse({msg: "OK", cnt: plaintext});
 
 			});
+			break;
+		case "generateKey":
+			var name = request.cnt.name;
+			var mail = request.cnt.mail;
+			var pass = request.cnt.password;
+
+			if (debug) {
+				console.log("Requesting NEW KEY: Name> "+name+" /Email> "+mail+" /Pass> "+pass);
+			}
+
+			newKeyPair(keyring, name, mail, pass).then(function(response){
+				if(response){
+					sendResponse({msg: "OK"});
+				}else{
+					sendResponse({msg: "NOTOK"});
+				}
+			});
+			break;
+		case "getPublicKeys":
+			var keys = getPublicKeys();
+			if (debug) {
+				console.log("-- EP response OK + public keys");
+			}
+			sendResponse({msg: "OK", cnt: keys});
+			break;
+		case "getPrivateKeys":
+			var keys = getPrivateKeys(); // Is sending clear private keys dangerous?
+			if (debug) {
+				console.log("-- EP response OK + private keys");
+			}
+			sendResponse({msg: "OK", cnt: keys});
 			break;
 	    default:
 	        if (debug) {

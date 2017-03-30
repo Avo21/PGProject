@@ -9,6 +9,7 @@
 	border-right-color: whitesmoke;
 	border-right-width: thin;
 	padding-right: 5px;
+	width: 90px;
 }
 .option {
 	padding-top: 8px;
@@ -35,6 +36,7 @@
 .right {
 	float: right;
 	padding-left: 10px;
+	flex-grow: 1;
 }
 .right .about {
 
@@ -52,37 +54,94 @@
 	border: inset;
 	border-color: whitesmoke;
 	border-width: 2px;
-	margin-left: 15px;
+	margin-left: 2%;
+	/*margin-left: 15px;*/
 }
 .key {
-	padding: 4px;
+	padding: 1%;
 	border-width: thin;
 	border-style: solid;
 	border-color: whitesmoke;
-	display: flex;
+	/*display: flex; All the fields in the same line (Userid, key...)*/
+	display: block;
 }
 .button {
     font-size: small;
-    float: right;
+    /*float: right;*/
 }
 .key:hover {
 	background-color: whitesmoke;
 }
-.keyPart {
+
+.key > div{
+	padding: 1%;
+}
+
+.key .visible {
+	display: flex;
+}
+
+/*.key .visible div{
 	padding: 4px;
 	border-width: thin;
 	border-right-style: solid;
 	border-right-color: whitesmoke;
 }
-.keyPart:last-child {
+
+.key .visible div:last-child {
 	border-right: none;
+}*/
+
+.key .visible .userId{
+	flex-grow: 1;
 }
-.keyPart.name {
-	min-width: 120px;
+
+.key .visible .show{
+	font-style: italic;
 }
-.keyPart.mail {
+
+.key .armored {
+	display: none;
+	font-size: smaller;
+	
+	border-top-width: thin;
+	border-top-style: solid;
+	border-top-color: darkgrey;
+
+	padding-top: 2%;
+	padding-left: 10%;
+}
+
+/*
+.keyPart.userId {
 	min-width: 220px;
 }
-/*.keyPart.publicKey {
-	min-width: 100px;
-}*/
+.keyPart.armored {
+	display: none;
+}
+*/
+#kmanager {
+	overflow: hidden;
+}
+
+#generatekey {
+	/*display: none;*/
+	margin: auto;
+	/*margin: 2%;*/
+	margin-top: 4%;
+	width: 60%;
+}
+
+#inputemail {
+	border-bottom: 0;
+	border-top: 0;
+}
+
+.inputkey {
+	width: 100%;
+}
+
+#submit_gen {
+	float: right;
+	margin: 2%;
+}

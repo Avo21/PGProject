@@ -5,6 +5,14 @@ var keyring; //:S
 
 function initKeys(){
 
+	/*TO DO
+
+	-initKeys
+	if keyring = undefined, generate keyring (import saved keys)
+	if there isn't any key, do something
+
+	*/
+
 	if (debug){
 		console.log("Initializing keyring");
 	}
@@ -16,7 +24,7 @@ function initKeys(){
 
 	// testing. newKeyPair function must be called from a form in a configuration page
 	keyring.clear();
-	newKeyPair(keyring);
+	newKeyPair(keyring,'Test User', 'testuser@testserver.com', 'abcd1234567890');
 	
 }
 
@@ -33,15 +41,21 @@ function generateKeyring(){
 	return keyring;
 }
 
-function newKeyPair(keyring){
+function newKeyPair(keyring,username,mail,passphrase){
 
-	var options = {
+	/*var options = {
 		numBits: 2048,
 		userId: 'Test User <testuser@testserver.com>',
 		passphrase: 'abcd1234567890'
+	};*/
+
+	var options = {
+		numBits: 2048,
+		userId: username + ' <' + mail +'>',
+		passphrase: passphrase
 	};
 
-	openpgp.generateKeyPair(options).then(function(keyPair) {
+	return openpgp.generateKeyPair(options).then(function(keyPair) {
 		// private key = keyPair.privateKeyArmored
 		// public key = keyPair.publicKeyArmored
 
@@ -55,9 +69,12 @@ function newKeyPair(keyring){
 			console.log(keyPair.publicKeyArmored);
 		}
 
+		return true
+
 	}).catch(function(error) {
 		//TO DO
 		console.log(error);
+		return false
 	});
 }
 
@@ -226,6 +243,42 @@ function verify(pgpMessage){
 	    }
 	});
 	*/
+}
+
+//TO DO: not using the global variable keyring
+function getPublicKeys(){
+
+	var pubKeys = keyring.publicKeys.keys;
+
+	var response = [];
+		
+	for(i=0;i<pubKeys.length;i++){
+		var userid = pubKeys[i].users[0].userId.userid;
+		var armoredKey = pubKeys[i].toPublic().armor();
+
+		var key = {userId: userid, key: armoredKey};
+		response.push(key);
+	}
+
+	return response;
+}
+
+//TO DO: not using the global variable keyring
+function getPrivateKeys(){
+
+	var privKeys = keyring.privateKeys.keys
+
+	var response = [];
+		
+	for(i=0;i<privKeys.length;i++){
+		var userid = privKeys[i].users[0].userId.userid;
+		var armoredKey = privKeys[i].armor();
+
+		var key = {userId: userid, key: armoredKey};
+		response.push(key);
+	}
+
+	return response;
 }
 
 

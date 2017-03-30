@@ -60,6 +60,8 @@ function leftMenu(){
 
 	k.addEventListener("click",function(){
 		selectOption(k,keys,a,about,c,config);
+		loadPublicKeys();
+		loadPrivateKeys();
 	});
 	
 	c.addEventListener("click",function(){
@@ -68,7 +70,7 @@ function leftMenu(){
 }
 
 //TO DO
-function getPublicKeys(){
+function getPublicKeys(){ // NOT IN USE
 
 /*
 <div class="keyPart name">Test User</div>
@@ -79,6 +81,7 @@ function getPublicKeys(){
 <div class="trust"></div>
 */
 
+	/*
 	var sampleKey1 = {
 		name : "Eric Clapton",
 		mail : "eric@gmail.com",
@@ -98,12 +101,41 @@ function getPublicKeys(){
 	}
 
 	keys = [sampleKey1,sampleKey2,sampleKey3];
+	*/
 
-	return keys;
+	////////////// real getPublicKeys
+
+
+	// message to the eventPage asking for public keys
+	chrome.runtime.sendMessage({msg: "getPublicKeys"}, function(response) {
+		// TO DO: Handle the response
+		console.log("Options> Public keys received.");
+
+		var pubKeys = response.cnt;
+		
+
+		/*	
+		for(i=0;i<pubKeys.length;i++){
+			console.log(i+">> ");
+			console.log(pubKeys[i].userId);
+			console.log(pubKeys[i].key);
+		}*/
+
+		console.log('-----------------RETURN');
+		return pubKeys;
+		
+	});
+
+	console.log('-----------------CACA');
+
+
+
+
+	//return keys;
 }
 
 //TO DO
-function getPrivateKeys(){
+function getPrivateKeys(){ // NOT IN USE
 
 	var sampleKey1 = {
 		name : "Eric Clapton",
@@ -118,104 +150,199 @@ function getPrivateKeys(){
 
 function loadPublicKey(key){
 
+	var divKey = document.createElement("div");
+	divKey.className = "armored publicKey";
+	divKey.innerText = key.key;
+	divKey.id = "PUB_KEY_"+key.userId; //Not sure if using the userid is a good idea
+
+	var divUserId = document.createElement("div");
+	divUserId.className = "userId";
+	divUserId.innerText = key.userId;
+
+	var divShow = document.createElement("div");
+	divShow.className = "show";
+	divShow.innerText = "Show key";
+	divShow.id = "PUB_SHOW_"+key.userId; //Not sure if using the userid is a good idea
+
+	function toggle(s_id, k_id){
+		var s = document.getElementById(s_id);
+		var k = document.getElementById(k_id);
+
+		if(s.innerText == "Show key"){
+			k.style.display = "flex";
+			s.innerText = "Hide key";
+		}else{
+			k.style.display = "none";
+			s.innerText = "Show key";
+		}
+	}
+
+	var divVisible = document.createElement("div");
+	divVisible.className = "visible";
+	divVisible.onclick = toggle.bind(null, divShow.id, divKey.id);
+	
 	var div = document.createElement("div");
 	div.className = "key";
-
-	var divName = document.createElement("div");
-	divName.className = "keyPart name";
-	divName.innerText = key.name;
-	div.appendChild(divName);
-
-	var divMail = document.createElement("div");
-	divMail.className = "keyPart mail";
-	divMail.innerText = key.mail;
-	div.appendChild(divMail);
-
-	var divKey = document.createElement("div");
-	divKey.className = "keyPart publicKey";
-	divKey.innerText = key.publicKey;
+	div.appendChild(divVisible);
+		divVisible.appendChild(divUserId);
+		divVisible.appendChild(divShow);
 	div.appendChild(divKey);
 
 	var publicKeys = document.getElementById("publicKeys");
 	publicKeys.appendChild(div);
+
 }
 
+//TO DO: If remains being like public keys, unify
 function loadPrivateKey(key){
 
+	var divKey = document.createElement("div");
+	divKey.className = "armored privateKey";
+	divKey.innerText = key.key;
+	divKey.id = "PRIV_KEY_"+key.userId; //Not sure if using the userid is a good idea
+
+	var divUserId = document.createElement("div");
+	divUserId.className = "userId";
+	divUserId.innerText = key.userId;
+
+	var divShow = document.createElement("div");
+	divShow.className = "show";
+	divShow.innerText = "Show key";
+	divShow.id = "PRIV_SHOW_"+key.userId; //Not sure if using the userid is a good idea
+
+	function toggle(s_id, k_id){
+		var s = document.getElementById(s_id);
+		var k = document.getElementById(k_id);
+
+		if(s.innerText == "Show key"){
+			k.style.display = "flex";
+			s.innerText = "Hide key";
+		}else{
+			k.style.display = "none";
+			s.innerText = "Show key";
+		} 
+	}
+
+	var divVisible = document.createElement("div");
+	divVisible.className = "visible";
+	divVisible.onclick = toggle.bind(null, divShow.id, divKey.id);
+	
 	var div = document.createElement("div");
 	div.className = "key";
-
-	var divName = document.createElement("div");
-	divName.className = "keyPart name";
-	divName.innerText = key.name;
-	div.appendChild(divName);
-
-	var divMail = document.createElement("div");
-	divMail.className = "keyPart mail";
-	divMail.innerText = key.mail;
-	div.appendChild(divMail);
-
-	var divKey = document.createElement("div");
-	divKey.className = "keyPart privateKey";
-	divKey.innerText = key.privateKey;
+	div.appendChild(divVisible);
+		divVisible.appendChild(divUserId);
+		divVisible.appendChild(divShow);
 	div.appendChild(divKey);
 
-	var privateKeys = document.getElementById("privateKeys");
-	privateKeys.appendChild(div);
+	var publicKeys = document.getElementById("privateKeys");
+	publicKeys.appendChild(div);
 }
 
 function loadPublicKeys(){
-	keys = getPublicKeys();
+	//keys = getPublicKeys();
 
-	keys.map(function(key){
-		loadPublicKey(key);
+	var pubKeys = document.getElementById("publicKeys");
+	var old = pubKeys.children;
+	for(i=old.length;i>0;i--){
+		old[i-1].remove();
+	}
+
+	// message to the eventPage asking for public keys
+	chrome.runtime.sendMessage({msg: "getPublicKeys"}, function(response) {
+		
+		console.log("Options> Public keys received.");
+		var keys = response.cnt;
+
+		keys.map(function(key){
+			loadPublicKey(key);
+		});
 	});
 }
 
 function loadPrivateKeys(){
-	keys = getPrivateKeys();
+	//keys = getPrivateKeys();
 
-	keys.map(function(key){
-		loadPrivateKey(key);
+	var privKeys = document.getElementById("privateKeys");
+	var old = privKeys.children;
+	for(i=old.length;i>0;i--){
+		old[i-1].remove();
+	}
+
+	// message to the eventPage asking for private keys
+	chrome.runtime.sendMessage({msg: "getPrivateKeys"}, function(response) {
+		
+		console.log("Options> Private keys received.");
+		var keys = response.cnt;
+
+		keys.map(function(key){
+			loadPrivateKey(key);
+		});
 	});
 }
 
 
 function rightMenu(){
-	var addkey = document.getElementById("addkey");
+	
+	var genkey = document.getElementById("genkey");
+	
+	genkey.addEventListener("click",function(){
 
-	addkey.addEventListener("click",function(){
+		var form = document.getElementById("generatekey");
+
+		if(form.style.display == "none"){
+			form.style.display = "block";
+		}else{
+			form.style.display = "none";
+		}
+	});
+
+	var submit = document.getElementById("submit_gen");
+	
+	submit.addEventListener("click",function(){ //TO DO - Submit with [Enter]
+
+		var input = document.getElementsByClassName("inputkey");
+
+		var key = {
+			name : input[0].value,
+			mail : input[1].value,
+			password : input[2].value
+		}; //TO DO - Parse input data
+
 		// message to the eventPage asking for a new public key
-
-/*
-		chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  			chrome.tabs.sendMessage(tabs[0].id, {msg: "addPublicKey"}, function(response) {
-    			console.log("msg addPublicKey enviado");
-  			});
-		});
-*/
-
-
-
-		chrome.runtime.sendMessage({msg: "addPublicKey"}, function(response) {
-
-			console.log("msg addPublicKey enviado");
-
-		// TO DO: Handle the response
+		chrome.runtime.sendMessage({msg: "generateKey", cnt: key}, function(response) {
+			// TO DO: Handle the response
+			loadPublicKeys();
+			loadPrivateKeys();
 		});
 
 	});
+
 
 }
 
 
 window.onload = function(){
 
+	console.log("PGProject> Loaded options page");
+
+	// !
+	chrome.runtime.sendMessage({msg: "initKeys"}, function(response) {
+			// TO DO: Handle the response
+	});
+
 	leftMenu();
-	loadPublicKeys();
-	loadPrivateKeys();
+	//loadPublicKeys();
+	//loadPrivateKeys();
 
 	rightMenu();
 
+/*
+-show keys
+show the keys in the keyring
+
+-add key
+ask for information or import key
+add to the keyring
+*/
 
 }

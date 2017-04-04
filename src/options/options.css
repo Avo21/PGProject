@@ -57,7 +57,8 @@
 	margin-left: 2%;
 	/*margin-left: 15px;*/
 }
-.key {
+/*.key {*/
+.keysList > div{
 	padding: 1%;
 	border-width: thin;
 	border-style: solid;
@@ -65,10 +66,12 @@
 	/*display: flex; All the fields in the same line (Userid, key...)*/
 	display: block;
 }
+
 .button {
     font-size: small;
     /*float: right;*/
 }
+
 .key:hover {
 	background-color: whitesmoke;
 }

@@ -253,9 +253,17 @@ function loadPublicKeys(){
 		console.log("Options> Public keys received.");
 		var keys = response.cnt;
 
-		keys.map(function(key){
-			loadPublicKey(key);
-		});
+		if(keys.length == 0){
+			var div = document.createElement("div");
+			div.innerHTML = "<i>No keys</i>";
+			var keys = document.getElementById("publicKeys");
+			keys.appendChild(div);
+		}else{
+			keys.map(function(key){
+				loadPublicKey(key);
+			});	
+		}
+
 	});
 }
 
@@ -274,9 +282,16 @@ function loadPrivateKeys(){
 		console.log("Options> Private keys received.");
 		var keys = response.cnt;
 
-		keys.map(function(key){
-			loadPrivateKey(key);
-		});
+		if(keys.length == 0){
+			var div = document.createElement("div");
+			div.innerHTML = "<i>No keys</i>";
+			var keys = document.getElementById("privateKeys");
+			keys.appendChild(div);
+		}else{
+			keys.map(function(key){
+				loadPrivateKey(key);
+			});	
+		}
 	});
 }
 
@@ -301,11 +316,14 @@ function rightMenu(){
 	submit.addEventListener("click",function(){ //TO DO - Submit with [Enter]
 
 		var input = document.getElementsByClassName("inputkey");
+		var name = input[0];
+		var mail = input[1];
+		var password = input[2];
 
 		var key = {
-			name : input[0].value,
-			mail : input[1].value,
-			password : input[2].value
+			name : name.value,
+			mail : mail.value,
+			password : password.value
 		}; //TO DO - Parse input data
 
 		// message to the eventPage asking for a new public key
@@ -314,6 +332,12 @@ function rightMenu(){
 			loadPublicKeys();
 			loadPrivateKeys();
 		});
+
+		name.value = "";
+		mail.value = "";
+		password.value = "";
+		var form = document.getElementById("generatekey");
+		form.style.display = "none";
 
 	});
 

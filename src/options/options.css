@@ -1,7 +1,7 @@
 #container {
 	display: flex;
-	min-width: 600px;
-	min-height: 400px;
+	min-width: 650px;
+	min-height: 420px;
 }
 .left {
 	float: left;
@@ -142,9 +142,18 @@
 
 .inputkey {
 	width: 100%;
+	height: 100%;
+	resize: none;
 }
 
-#submit_gen {
+.submit_key {
 	float: right;
 	margin: 2%;
+}
+
+#importkey {
+	margin: auto;
+	margin-top: 4%;
+	width: 80%;
+	height: 200px;
 }

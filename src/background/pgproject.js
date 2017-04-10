@@ -78,6 +78,29 @@ function newKeyPair(keyring,username,mail,passphrase){
 	});
 }
 
+/* TODO
+not to use global keyring
+to handle response (errors)
+to parse input key
+-- the key is updated if it is already in the keyring
+*/
+function importPublicKey(keyring, key){ // PUBLIC
+
+	keyring.publicKeys.importKey(key);
+	return true; //TO DO
+}
+/* TODO
+not to use global keyring
+to handle response (errors)
+to parse input key
+-- the key is updated if it is already in the keyring
+*/
+function importPrivateKey(keyring, key){ // PRIVATE
+
+	keyring.privateKeys.importKey(key);
+	return true; //TO DO
+}
+
 function getPublicKeysByEmail(email){
 	var keyArray = keyring.publicKeys;
 	var keys = keyArray.getForAddress(email);

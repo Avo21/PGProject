@@ -164,6 +164,37 @@ chrome.runtime.onMessage.addListener(
 			}
 			sendResponse({msg: "OK", cnt: keys});
 			break;
+		case "importPublic":
+			var key = request.cnt;
+			//importPublicKey(keyring, key);
+			
+			if (debug) {
+				console.log("Requesting IMPORT KEY");
+			}
+
+			//TODO response
+			var response = importPublicKey(keyring, key);
+			if(response){
+					sendResponse({msg: "OK"});
+			}else{
+					sendResponse({msg: "NOTOK"});
+			}
+
+			/*
+			importPublicKey(keyring, key).then(function(response){
+				if(response){
+					sendResponse({msg: "OK"});
+				}else{
+					sendResponse({msg: "NOTOK"});
+				}
+			});
+			*/
+			break;
+		case "importPrivate":
+			var key = request.cnt;
+			importPrivateKey(keyring, key);
+			//TODO response
+			break;
 	    default:
 	        if (debug) {
 				console.log("Message [" + request.msg + "] not known on EP");

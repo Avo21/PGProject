@@ -62,16 +62,21 @@
 
         <div id="kmanager"> <h1>Keys manager</h1>
           <button class="button" id="genkey">Generate my keys</button>
-          <button class="button" id="importmykey">Import my keys</button>
-          <button class="button" id="importkey">Import contact key</button>
+          <button class="button" id="impkey">Import key</button>
+          <!-- <button class="button" id="importkey">Import contact key</button> -->
           <br>
           <div id="generatekey" style="display: none;">
             <input class="inputkey" type="text" name="name" placeholder="Name"></input>
             <input id="inputemail" class="inputkey" type="text" name="email" placeholder="Email address"></input>
             <input class="inputkey" type="password" name="pass" placeholder="Passphrase" ></input>
-            <button id="submit_gen" class="button">Generate!</button>
+            <button id="submit_gen" class="button submit_key">Generate!</button>
+          </div>
+          <div id="importkey" style="display: none;">
+            <textarea id="armoredkey" class="inputkey" type="text" name="armoredkey" placeholder="Armored key"></textarea>
+            <button id="submit_imp" class="button submit_key">Import!</button>
           </div>
         </div>
+
 
         <p><h1>Public keys</h1></p>
         <!-- Manage keys:

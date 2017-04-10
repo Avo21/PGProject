@@ -299,7 +299,8 @@ function loadPrivateKeys(){
 function rightMenu(){
 	
 	var genkey = document.getElementById("genkey");
-	
+
+	// GENERATE KEY
 	genkey.addEventListener("click",function(){
 
 		var form = document.getElementById("generatekey");
@@ -328,7 +329,7 @@ function rightMenu(){
 
 		// message to the eventPage asking for a new public key
 		chrome.runtime.sendMessage({msg: "generateKey", cnt: key}, function(response) {
-			// TO DO: Handle the response
+			// TO DO - Handle the response
 			loadPublicKeys();
 			loadPrivateKeys();
 		});
@@ -337,6 +338,38 @@ function rightMenu(){
 		mail.value = "";
 		password.value = "";
 		var form = document.getElementById("generatekey");
+		form.style.display = "none";
+
+	});
+
+	// IMPORT KEY
+	var impkey = document.getElementById("impkey");
+	impkey.addEventListener("click",function(){
+
+		var form = document.getElementById("importkey");
+
+		if(form.style.display == "none"){ //TO DO - Not showing more than one option at time when managing keys
+			form.style.display = "block";
+		}else{
+			form.style.display = "none";
+		}
+	});
+
+	var submit = document.getElementById("submit_imp");
+
+	submit.addEventListener("click",function(){ //TO DO - Submit with [Enter]
+
+		var armored = document.getElementById("armoredkey");
+
+		// message to the eventPage asking for a new public key
+		chrome.runtime.sendMessage({msg: "importPublic", cnt: armored.value}, function(response) {
+			// TO DO - Handle the response
+			loadPublicKeys();
+			loadPrivateKeys();
+		});
+
+		armored.value = "";
+		var form = document.getElementById("importkey");
 		form.style.display = "none";
 
 	});

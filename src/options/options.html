@@ -61,8 +61,9 @@
       <div id="keys" class="keys">
 
         <div id="kmanager"> <h1>Keys manager</h1>
-          <button class="button" id="genkey">Generate my keys</button>
-          <button class="button" id="impkey">Import key</button>
+          <button class="button" id="genKey">Generate my keys</button>
+          <button class="button" id="impPrivKey">Import my keys</button>
+          <button class="button" id="impPubKey">Import public key</button>
           <!-- <button class="button" id="importkey">Import contact key</button> -->
           <br>
           <div id="generatekey" style="display: none;">
@@ -71,9 +72,13 @@
             <input class="inputkey" type="password" name="pass" placeholder="Passphrase" ></input>
             <button id="submit_gen" class="button submit_key">Generate!</button>
           </div>
-          <div id="importkey" style="display: none;">
-            <textarea id="armoredkey" class="inputkey" type="text" name="armoredkey" placeholder="Armored key"></textarea>
-            <button id="submit_imp" class="button submit_key">Import!</button>
+          <div id="importPub" class="importkey" style="display: none;">
+            <textarea id="armoredPub" class="inputkey" type="text" name="armoredkey" placeholder="Public key"></textarea>
+            <button id="submit_pub" class="button submit_key">Import!</button>
+          </div>
+          <div id="importPriv" class="importkey" style="display: none;">
+            <textarea id="armoredPriv" class="inputkey" type="text" name="armoredkey" placeholder="Private key"></textarea>
+            <button id="submit_priv" class="button submit_key">Import!</button>
           </div>
         </div>
 

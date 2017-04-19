@@ -166,10 +166,9 @@ chrome.runtime.onMessage.addListener(
 			break;
 		case "importPublic":
 			var key = request.cnt;
-			//importPublicKey(keyring, key);
 			
 			if (debug) {
-				console.log("Requesting IMPORT KEY");
+				console.log("Requesting IMPORT PUBLIC KEY");
 			}
 
 			//TODO response
@@ -180,20 +179,22 @@ chrome.runtime.onMessage.addListener(
 					sendResponse({msg: "NOTOK"});
 			}
 
-			/*
-			importPublicKey(keyring, key).then(function(response){
-				if(response){
-					sendResponse({msg: "OK"});
-				}else{
-					sendResponse({msg: "NOTOK"});
-				}
-			});
-			*/
 			break;
-		case "importPrivate":
+		case "importMyKeys":
 			var key = request.cnt;
-			importPrivateKey(keyring, key);
+			
+			if (debug) {
+				console.log("Requesting IMPORT PRIVATE AND PUBLIC KEYS");
+			}
+
 			//TODO response
+			var response = importMyKeys(keyring, key);
+			if(response){
+					sendResponse({msg: "OK"});
+			}else{
+					sendResponse({msg: "NOTOK"});
+			}
+
 			break;
 	    default:
 	        if (debug) {

@@ -298,7 +298,7 @@ function loadPrivateKeys(){
 
 function rightMenu(){
 	
-	var genkey = document.getElementById("genkey");
+	var genkey = document.getElementById("genKey");
 
 	// GENERATE KEY
 	genkey.addEventListener("click",function(){
@@ -342,11 +342,11 @@ function rightMenu(){
 
 	});
 
-	// IMPORT KEY
-	var impkey = document.getElementById("impkey");
+	// IMPORT PUBLIC KEY
+	var impkey = document.getElementById("impPubKey");
 	impkey.addEventListener("click",function(){
 
-		var form = document.getElementById("importkey");
+		var form = document.getElementById("importPub");
 
 		if(form.style.display == "none"){ //TO DO - Not showing more than one option at time when managing keys
 			form.style.display = "block";
@@ -355,11 +355,11 @@ function rightMenu(){
 		}
 	});
 
-	var submit = document.getElementById("submit_imp");
+	var submit = document.getElementById("submit_pub");
 
 	submit.addEventListener("click",function(){ //TO DO - Submit with [Enter]
 
-		var armored = document.getElementById("armoredkey");
+		var armored = document.getElementById("armoredPub");
 
 		// message to the eventPage asking for a new public key
 		chrome.runtime.sendMessage({msg: "importPublic", cnt: armored.value}, function(response) {
@@ -369,7 +369,40 @@ function rightMenu(){
 		});
 
 		armored.value = "";
-		var form = document.getElementById("importkey");
+		var form = document.getElementById("importPub");
+		form.style.display = "none";
+
+	});
+
+
+	// IMPORT MY KEYS
+	var impkey = document.getElementById("impPrivKey");
+	impkey.addEventListener("click",function(){
+
+		var form = document.getElementById("importPriv");
+
+		if(form.style.display == "none"){ //TO DO - Not showing more than one option at time when managing keys
+			form.style.display = "block";
+		}else{
+			form.style.display = "none";
+		}
+	});
+
+	var submit = document.getElementById("submit_priv");
+
+	submit.addEventListener("click",function(){ //TO DO - Submit with [Enter]
+
+		var armored = document.getElementById("armoredPriv");
+
+		// message to the eventPage asking for a new public key
+		chrome.runtime.sendMessage({msg: "importMyKeys", cnt: armored.value}, function(response) {
+			// TO DO - Handle the response
+			loadPublicKeys();
+			loadPrivateKeys();
+		});
+
+		armored.value = "";
+		var form = document.getElementById("importPriv");
 		form.style.display = "none";
 
 	});

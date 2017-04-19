@@ -95,9 +95,10 @@ to handle response (errors)
 to parse input key
 -- the key is updated if it is already in the keyring
 */
-function importPrivateKey(keyring, key){ // PRIVATE
+function importMyKeys(keyring, key){ // PRIVATE
 
 	keyring.privateKeys.importKey(key);
+	keyring.publicKeys.importKey(key);
 	return true; //TO DO
 }
 

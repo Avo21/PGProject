@@ -299,6 +299,14 @@ function loadPrivateKeys(){
 function rightMenu(){
 	
 	var genkey = document.getElementById("genKey");
+	var all = document.getElementsByClassName("kmanager")
+
+	// hide all the input blocks
+	function close(){
+		for (var i = 0; i < all.length; i++) {
+			all[i].style = "display: none;";
+		}
+	}
 
 	// GENERATE KEY
 	genkey.addEventListener("click",function(){
@@ -306,9 +314,10 @@ function rightMenu(){
 		var form = document.getElementById("generatekey");
 
 		if(form.style.display == "none"){
+			close();
 			form.style.display = "block";
 		}else{
-			form.style.display = "none";
+			close();
 		}
 	});
 
@@ -337,8 +346,7 @@ function rightMenu(){
 		name.value = "";
 		mail.value = "";
 		password.value = "";
-		var form = document.getElementById("generatekey");
-		form.style.display = "none";
+		close();
 
 	});
 
@@ -349,9 +357,10 @@ function rightMenu(){
 		var form = document.getElementById("importPub");
 
 		if(form.style.display == "none"){ //TO DO - Not showing more than one option at time when managing keys
+			close();
 			form.style.display = "block";
 		}else{
-			form.style.display = "none";
+			close();
 		}
 	});
 
@@ -369,8 +378,7 @@ function rightMenu(){
 		});
 
 		armored.value = "";
-		var form = document.getElementById("importPub");
-		form.style.display = "none";
+		close();
 
 	});
 
@@ -382,9 +390,10 @@ function rightMenu(){
 		var form = document.getElementById("importPriv");
 
 		if(form.style.display == "none"){ //TO DO - Not showing more than one option at time when managing keys
+			close();
 			form.style.display = "block";
 		}else{
-			form.style.display = "none";
+			close();
 		}
 	});
 
@@ -402,8 +411,7 @@ function rightMenu(){
 		});
 
 		armored.value = "";
-		var form = document.getElementById("importPriv");
-		form.style.display = "none";
+		close();
 
 	});
 

@@ -66,17 +66,17 @@
           <button class="button" id="impPubKey">Import public key</button>
           <!-- <button class="button" id="importkey">Import contact key</button> -->
           <br>
-          <div id="generatekey" style="display: none;">
+          <div id="generatekey" class="kmanager" style="display: none;">
             <input class="inputkey" type="text" name="name" placeholder="Name"></input>
             <input id="inputemail" class="inputkey" type="text" name="email" placeholder="Email address"></input>
             <input class="inputkey" type="password" name="pass" placeholder="Passphrase" ></input>
             <button id="submit_gen" class="button submit_key">Generate!</button>
           </div>
-          <div id="importPub" class="importkey" style="display: none;">
+          <div id="importPub" class="importkey kmanager" style="display: none;">
             <textarea id="armoredPub" class="inputkey" type="text" name="armoredkey" placeholder="Public key"></textarea>
             <button id="submit_pub" class="button submit_key">Import!</button>
           </div>
-          <div id="importPriv" class="importkey" style="display: none;">
+          <div id="importPriv" class="importkey kmanager" style="display: none;">
             <textarea id="armoredPriv" class="inputkey" type="text" name="armoredkey" placeholder="Private key"></textarea>
             <button id="submit_priv" class="button submit_key">Import!</button>
           </div>

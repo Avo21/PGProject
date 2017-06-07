@@ -1,6 +1,7 @@
 var gmail_textbox_class = "Al editable LW-avf";
 var gmail_textbox_table_class = "cf An";
 var gmail_inbox_class = "adn ads";
+
 var color = "LightSteelBlue";
 
 var debug = true;
@@ -33,12 +34,12 @@ window.onload = function() {
 
 
 // messages to the eventPage
-function toEventPage(message, textbox){
+function toEventPage(message, textbox, emails){
 	var cnt = null;
 	if(textbox){
 		cnt = textbox.innerText;
 	}
-	chrome.runtime.sendMessage({msg: message, cnt: cnt}, function(response){
+	chrome.runtime.sendMessage({msg: message, cnt: cnt, emails: emails}, function(response){
 		if (debug) {
 			console.log("Message [" + message + "] sent from CS to EP");
 			console.log("--response from EP: " + response.msg);
@@ -323,6 +324,7 @@ function createDiv(t){
 
 	var tb = getTbFromTbTable(t);
 
+
 	var div = document.createElement("div");
 	div.type = "div";
 	div.className = "pgproject_tb_bar"
@@ -393,7 +395,8 @@ function createDiv(t){
 
 	b2.onclick = function(){
 		// Encrypt
-		toEventPage("encrypt", tb);//encrypt(tb);
+		var to = getTo(t);
+		toEventPage("encrypt", tb, to);//encrypt(tb);
 		hideAllButtons();
 	}
 
@@ -673,4 +676,31 @@ function text_is(text){
 		return "plain";
 	}
 }
+
+//TO DO: change var names
+function getTo(textbox){
+
+	//var textbox = document.getElementsByClassName("cf An");
+	//x = textbox[0]; // ONLY FOR ONE TEXTBOX
+	var x = textbox;
+
+	tag = x.className;
+	
+	while (tag != "I5"){
+		x = x.parentNode;
+		tag = x.className;
+	}
+
+	var vR = x.getElementsByClassName("vR");
+
+	var emails = [];
+
+	for (var i = 0; i < vR.length; i++){
+		emails.push(vR[i].firstChild.getAttribute("email"));
+	}
+
+	return emails;
+
+}
+
 

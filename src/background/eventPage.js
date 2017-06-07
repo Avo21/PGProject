@@ -70,7 +70,7 @@ chrome.runtime.onMessage.addListener(
 	    	sendResponse({msg: "OK"});
 	    	break;
 	    case "encrypt":
-	    	encrypt(request.cnt).then(function(pgpmessage) {
+	    	encrypt(request.cnt,request.emails).then(function(pgpmessage) {
 	    		if (debug) {
 					console.log("--EP response OK +  " + pgpmessage);
 				}

@@ -124,13 +124,13 @@ function getPrivateKeysByEmail(email, password){
 }
 
 /* TO DO:
-email by parameter
 more than one email address
 error
 */ 
-function encrypt(text){
+function encrypt(text, emails){
 
-	email = "testuser@testserver.com";
+	//email = "testuser@testserver.com";
+	email = emails[0]; // TO DO: MORE THAN ONE EMAIL ADDRESS
 	var pubKeys = getPublicKeysByEmail(email);
 
 	if(debug){

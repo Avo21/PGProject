@@ -23,8 +23,8 @@ function initKeys(){
 	}
 
 	// testing. newKeyPair function must be called from a form in a configuration page
-	keyring.clear();
-	newKeyPair(keyring,'Test User', 'testuser@testserver.com', 'abcd1234567890');
+	//keyring.clear();
+	//newKeyPair(keyring,'Test User', 'testuser@testserver.com', 'abcd1234567890');
 	
 }
 
@@ -146,11 +146,16 @@ email and password by parameter
 more than one email address
 error
 */
-function sign(text){
+function sign(text, email){
 	// signClearMessage(privateKeys, text)
 
-	email = "testuser@testserver.com";
-	password = "abcd1234567890";
+	//email = "testuser@testserver.com";
+	//password = "abcd1234567890"; //TO DO: send password from Content Script
+	var password = sessionStorage.getItem('psph');
+
+	if(debug){
+		console.log("--Signing message with password: " + password);
+	}
 
 	var privKeys = getPrivateKeysByEmail(email, password);
 
@@ -166,16 +171,19 @@ email and password by parameter
 more than one email address
 error
 */
-function decrypt(pgpMessage){
+function decrypt(pgpMessage, x){
 	
-	email = "testuser@testserver.com";
-	password = "abcd1234567890";
+	//email = "testuser@testserver.com";
+	//password = "abcd1234567890"; //TO DO: send password from Content Script
+	var password = sessionStorage.getItem('psph');
+	email = x;
 
 	var privKeys = getPrivateKeysByEmail(email, password);
 	var privKey = privKeys[0];
 
 	if(debug){
 		console.log("--Decrypting message: " + pgpMessage);
+		console.log("--email: " + email + " | password"+ password + " | privKey" + privKey);
 	}
 
 	pgpMessage = openpgp.message.readArmored(pgpMessage);
@@ -219,9 +227,10 @@ email by parameter
 more than one email address
 error
 */
-function verify(pgpMessage){
+function verify(pgpMessage, emails){
 
-	email = "testuser@testserver.com";
+	//email = "testuser@testserver.com";
+	email = emails[0]; //
 	var pubKeys = getPublicKeysByEmail(email);
 
 	pgpMessage = openpgp.cleartext.readArmored(pgpMessage);

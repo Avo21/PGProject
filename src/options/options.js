@@ -416,6 +416,38 @@ function rightMenu(){
 	});
 
 
+	// SAVE PASSPHRASE
+	var submit = document.getElementById("submit_pass");
+	
+	submit.addEventListener("click",function(){ //TO DO - Submit with [Enter]
+
+		var pass = document.getElementById("inputpass").value;
+
+		// save pass
+
+
+		// send data to the eventPage to be storaged
+		chrome.runtime.sendMessage({msg: "savePassphrase", cnt: pass}, function(response) {
+			// TO DO - Handle the response
+			
+		});
+
+		/*
+		// Save data to sessionStorage
+		sessionStorage.setItem('psph', pass);
+
+		// Get saved data from sessionStorage
+		var data = sessionStorage.getItem('key');
+
+		// Remove saved data from sessionStorage
+		sessionStorage.removeItem('key');
+
+		// Remove all saved data from sessionStorage
+		sessionStorage.clear();
+		*/
+
+	});
+
 }
 
 

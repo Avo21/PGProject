@@ -35,10 +35,12 @@ window.onload = function() {
 
 // messages to the eventPage
 function toEventPage(message, textbox, emails){
+	
 	var cnt = null;
 	if(textbox){
 		cnt = textbox.innerText;
 	}
+
 	chrome.runtime.sendMessage({msg: message, cnt: cnt, emails: emails}, function(response){
 		if (debug) {
 			console.log("Message [" + message + "] sent from CS to EP");
@@ -70,6 +72,9 @@ window.addEventListener("click",function(){
 	if (debug){
 		console.log("click")
 	}
+
+
+
 
 	tbTablesList = getTbTables(gmail_textbox_table_class);
 	inboxList = getInbox(gmail_inbox_class);
@@ -310,6 +315,26 @@ function createButton_b6(){
 	return button;
 }
 
+/* PROBLEM WITH FOCUS...
+// Password input
+function createPassw(){
+	bPass = document.createElement("input");
+	bPass.className = "inputkey"
+	bPass.type = "password";
+	bPass.title = "Password";
+	bPass.placeholder="Passphrase"
+	bPass.style.float = "right";
+	bPass.style.display = "flex";//"none";
+	
+	//bPass.style.fontSize = "x-large";
+    //bPass.style.background = "inherit";
+    bPass.style.border = "none";
+    //bPass.style.paddingTop = "1px";
+
+	return bPass;
+}
+*/
+
 function createDiv(t){
 
 	function hideAllButtons(){
@@ -352,6 +377,12 @@ function createDiv(t){
 	// Decrypt
 	var b4 = createButton_b4();
 	div.appendChild(b4);
+
+	/*
+	// Password
+	var bPass = createPassw();
+	//div.appendChild(bPass);
+	*/
 
 	b1.onclick = function(){
 		//pgproject true means that the buttons are visible
@@ -402,13 +433,15 @@ function createDiv(t){
 
 	b3.onclick = function(){
 		// Sign
-		toEventPage("sign", tb);//sign(tb);
+		var from = getFrom(t);
+		toEventPage("sign", tb, from);//sign(tb);
 		hideAllButtons();
 	}
 
 	b4.onclick = function(){
 		// Decrypt
-		toEventPage("decrypt", tb);//decrypt(tb);
+		var from = getFrom(t); // "from" is not the best name
+		toEventPage("decrypt", tb, from);//decrypt(tb);
 		hideAllButtons();
 	}
 
@@ -494,15 +527,17 @@ function createDivInbox(inbox){
 		}
 	}
 
-	b4.onclick = function(){
+	b4.onclick = function(){ // from and to are different with inbox mails
 		// Decrypt
-		toEventPage("decrypt", tb);//decrypt(tb);
+		var from = getFrom(t); // actually to
+		toEventPage("decrypt", tb, from);//decrypt(tb);
 		hideAllButtons();
 	}
 
 	b6.onclick = function(){
 		// Verify signature
-		toEventPage("verify", tb);//verify(tb);
+		var to = getTo(t); // actually from and change function
+		toEventPage("verify", tb, to);//verify(tb);
 		hideAllButtons();
 	}
 
@@ -700,6 +735,39 @@ function getTo(textbox){
 	}
 
 	return emails;
+
+}
+
+//TO DO: GET REAL EMAIL
+//TO DO: change var names
+function getFrom(textbox){
+
+	/*
+	//var textbox = document.getElementsByClassName("cf An");
+	//x = textbox[0]; // ONLY FOR ONE TEXTBOX
+	var x = textbox;
+
+	tag = x.className;
+	
+	while (tag != "I5"){
+		x = x.parentNode;
+		tag = x.className;
+	}
+
+	var vR = x.getElementsByClassName("vR");
+
+	var emails = [];
+
+	for (var i = 0; i < vR.length; i++){
+		emails.push(vR[i].firstChild.getAttribute("email"));
+	}
+
+	return emails;
+
+	*/
+
+	//return "testuser@testserver.com";
+	return "alvaro.failde@gmail.com"; // TO DO
 
 }
 

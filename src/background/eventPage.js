@@ -22,6 +22,7 @@ chrome.runtime.onMessage.addListener(
 		*/
 		if (debug) {
 			console.log("Message [" + request.msg + "] received on EP");
+			console.log("with cnt [" + request.cnt + "] and emails ["+ request.emails +"]");
 		}
 
 
@@ -78,7 +79,7 @@ chrome.runtime.onMessage.addListener(
 			});
 			break;
 		case "sign":
-	    	sign(request.cnt).then(function(pgpmessage) {
+	    	sign(request.cnt, request.emails).then(function(pgpmessage) {
 	    		if (debug) {
 					console.log("--EP response OK +  " + pgpmessage);
 				}
@@ -86,7 +87,7 @@ chrome.runtime.onMessage.addListener(
 			});
 			break;
 		case "decrypt":
-	    	decrypt(request.cnt).then(function(plaintext) {
+	    	decrypt(request.cnt, request.emails).then(function(plaintext) {
 	    		if (debug) {
 					console.log("--EP response OK +  " + plaintext);
 				}
@@ -103,7 +104,7 @@ chrome.runtime.onMessage.addListener(
     		sendResponse({msg: "OK", cnt: plaintext});
 			break;
 		case "verify":
-	    	verify(request.cnt).then(function(response) {
+	    	verify(request.cnt, request.emails).then(function(response) {
 
 	    		/*response = {
 			    	Promise<{
@@ -194,6 +195,32 @@ chrome.runtime.onMessage.addListener(
 			}else{
 					sendResponse({msg: "NOTOK"});
 			}
+
+			break;
+		case "savePassphrase":
+
+			if (debug) {
+				console.log("Received passphrase to storaging");
+			}
+
+			// Save data to sessionStorage
+			sessionStorage.setItem('psph', request.cnt);
+
+
+
+			/*
+			// Save data to sessionStorage
+			sessionStorage.setItem('psph', pass);
+
+			// Get saved data from sessionStorage
+			var data = sessionStorage.getItem('key');
+
+			// Remove saved data from sessionStorage
+			sessionStorage.removeItem('key');
+
+			// Remove all saved data from sessionStorage
+			sessionStorage.clear();
+			*/
 
 			break;
 	    default:

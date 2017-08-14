@@ -161,3 +161,10 @@
 .info {
 	color: indianred;
 }
+
+.inputpass {
+	width: 50%;
+	height: 100%;
+	resize: none;
+	display: block;
+}

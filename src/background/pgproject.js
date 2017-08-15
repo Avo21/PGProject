@@ -87,6 +87,8 @@ to parse input key
 function importPublicKey(keyring, key){ // PUBLIC
 
 	keyring.publicKeys.importKey(key);
+	keyring.store();
+
 	return true; //TO DO
 }
 /* TODO
@@ -99,6 +101,8 @@ function importMyKeys(keyring, key){ // PRIVATE
 
 	keyring.privateKeys.importKey(key);
 	keyring.publicKeys.importKey(key);
+	keyring.store();
+
 	return true; //TO DO
 }
 
@@ -171,24 +175,24 @@ email and password by parameter
 more than one email address
 error
 */
-function decrypt(pgpMessage, x){
+function decrypt(pgpMessage, emails){
 	
 	//email = "testuser@testserver.com";
 	//password = "abcd1234567890"; //TO DO: send password from Content Script
 	var password = sessionStorage.getItem('psph');
-	email = x;
+	email = emails[0];
 
 	var privKeys = getPrivateKeysByEmail(email, password);
 	var privKey = privKeys[0];
 
 	if(debug){
 		console.log("--Decrypting message: " + pgpMessage);
-		console.log("--email: " + email + " | password"+ password + " | privKey" + privKey);
+		console.log("--email: " + email + " | password: "+ password + " | privKey" + privKey);
 	}
 
 	pgpMessage = openpgp.message.readArmored(pgpMessage);
 	
-	return openpgp.decryptMessage(privKey, pgpMessage)
+	return openpgp.decryptMessage(privKey, pgpMessage);
 
 
 /*
@@ -227,10 +231,10 @@ email by parameter
 more than one email address
 error
 */
-function verify(pgpMessage, emails){
+function verify(pgpMessage, email){
 
 	//email = "testuser@testserver.com";
-	email = emails[0]; //
+	//email = emails[0]; //
 	var pubKeys = getPublicKeysByEmail(email);
 
 	pgpMessage = openpgp.cleartext.readArmored(pgpMessage);

@@ -527,17 +527,17 @@ function createDivInbox(inbox){
 		}
 	}
 
-	b4.onclick = function(){ // from and to are different with inbox mails
+	b4.onclick = function(){
 		// Decrypt
-		var from = getFrom(t); // actually to
-		toEventPage("decrypt", tb, from);//decrypt(tb);
+		var to = getToInbox(inbox); 
+		toEventPage("decrypt", tb, to);
 		hideAllButtons();
 	}
 
 	b6.onclick = function(){
 		// Verify signature
-		var to = getTo(t); // actually from and change function
-		toEventPage("verify", tb, to);//verify(tb);
+		var from = getFromInbox(inbox);
+		toEventPage("verify", tb, from);
 		hideAllButtons();
 	}
 
@@ -713,13 +713,14 @@ function text_is(text){
 }
 
 //TO DO: change var names
+// Textbox could be the element with class "I5" in this and getFrom functions
 function getTo(textbox){
 
 	//var textbox = document.getElementsByClassName("cf An");
 	//x = textbox[0]; // ONLY FOR ONE TEXTBOX
 	var x = textbox;
 
-	tag = x.className;
+	var tag = x.className;
 	
 	while (tag != "I5"){
 		x = x.parentNode;
@@ -732,43 +733,78 @@ function getTo(textbox){
 
 	for (var i = 0; i < vR.length; i++){
 		emails.push(vR[i].firstChild.getAttribute("email"));
+
+		if (debug) {
+			console.log("-- getTo : " + emails[i]);
+		}
 	}
 
 	return emails;
 
 }
 
-//TO DO: GET REAL EMAIL
 //TO DO: change var names
 function getFrom(textbox){
 
-	/*
-	//var textbox = document.getElementsByClassName("cf An");
-	//x = textbox[0]; // ONLY FOR ONE TEXTBOX
 	var x = textbox;
 
-	tag = x.className;
+	var tag = x.className;
 	
 	while (tag != "I5"){
 		x = x.parentNode;
 		tag = x.className;
 	}
 
-	var vR = x.getElementsByClassName("vR");
+	var a8i = x.getElementsByClassName("a8i");
+
+	var email = a8i[0].innerText.split(" ").pop();
+
+	email = email.substr(0,email.length-1);
+
+	if (debug) {
+		console.log("-- getFrom : " + email);
+	}
+
+	return email;
+
+}
+
+//
+function getToInbox(textbox){
+
+	// textbox -> class "adn ads"
+
+	var hb = textbox.getElementsByClassName("hb");
 
 	var emails = [];
 
-	for (var i = 0; i < vR.length; i++){
-		emails.push(vR[i].firstChild.getAttribute("email"));
+	for (var i = 0; i < hb.length; i++){
+		emails.push(hb[i].childNodes[1].getAttribute("email"));
+
+		if (debug) {
+			console.log("-- getToInbox : " + emails[i]);
+		}
 	}
 
 	return emails;
 
-	*/
-
-	//return "testuser@testserver.com";
-	return "alvaro.failde@gmail.com"; // TO DO
-
 }
 
+//
+function getFromInbox(textbox){
 
+	/*
+	var email = textbox.getElementsByClassName("ajn")[0].getAttribute("jid");
+
+	return email;
+	*/
+
+	email = textbox.getElementsByClassName("iw")[0].firstChild.getAttribute("email")
+
+	if (debug) {
+		console.log("-- getFromInbox : " + email);
+	}
+
+	return email;
+
+}

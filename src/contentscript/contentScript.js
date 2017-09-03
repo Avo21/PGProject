@@ -812,9 +812,11 @@ function getFrom(textbox){
 
 	var a8i = x.getElementsByClassName("a8i");
 
-	var email = a8i[0].innerText.split(" ").pop();
+	var email = a8i[0].innerText.split(" ").pop(); //TODO: Other languages could have another order...
 
-	email = email.substr(0,email.length-1);
+	if (email.slice(-1) == "."){ // Some languages add "." at the end of the mail.
+		email = email.substr(0,email.length-1);
+	}
 
 	if (debug) {
 		console.log("-- getFrom : " + email);

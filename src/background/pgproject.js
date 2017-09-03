@@ -49,7 +49,7 @@ function newKeyPair(keyring,username,mail,passphrase){
 	};*/
 
 	var options = {
-		numBits: 2048,
+		numBits: 4096,
 		userId: username + ' <' + mail +'>',
 		passphrase: passphrase
 	};

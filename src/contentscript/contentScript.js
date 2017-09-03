@@ -34,7 +34,7 @@ window.onload = function() {
 
 
 // messages to the eventPage
-function toEventPage(message, textbox, emails){
+function toEventPage(message, alert, textbox, emails){
 	
 	var cnt = null;
 	if(textbox){
@@ -44,19 +44,33 @@ function toEventPage(message, textbox, emails){
 	chrome.runtime.sendMessage({msg: message, cnt: cnt, emails: emails}, function(response){
 		if (debug) {
 			console.log("Message [" + message + "] sent from CS to EP");
-			console.log("--response from EP: " + response.msg);
+			//console.log("--response from EP: " + response.msg);
 		}
 
-		if (response.cnt) {
-			replace(textbox, response);
+		if (response.msg == "OK"){
+			if (response.cnt) {
+				replace(textbox, response.cnt);
+				replace(alert,"");
+				alert.style.color = "unset";
+			} //else
+		} else if (response.msg == "Signature verified") {
+			if (response.cnt) {
+				replace(textbox, response.cnt);
+				replace(alert,response.msg);
+				alert.style.color = "green";
+			} //else
+		}else {
+			alert.style.color = "red";
+			replace(alert,response.msg);
 		}
+
 
 		//return response.cnt;
 	})
 }
 
 function replace(tb, resp){
-	tb.innerText = resp.cnt;
+	tb.innerText = resp;//resp.cnt;
 }
 
 function loadIconsStyle(){
@@ -335,6 +349,27 @@ function createPassw(){
 }
 */
 
+// Alert messages
+function createAlert(){
+	alert = document.createElement("div");
+	alert.className = "pgproject_alert"
+	//alert.type = "alert";
+	alert.style.float = "left";
+	alert.style.display = "flex"; //none
+
+	alert.style.fontSize = "small";
+    //alert.style.background = "inherit";
+    alert.style.paddingTop = "5px";
+    alert.style.paddingLeft = "5px";
+    //alert.style.color = "red"; //unset
+
+    //alert.innerText = "Bla bla bla bla";
+
+	
+	return alert;
+}
+
+
 function createDiv(t){
 
 	function hideAllButtons(){
@@ -384,6 +419,10 @@ function createDiv(t){
 	//div.appendChild(bPass);
 	*/
 
+	// Alert message
+	var alert = createAlert();
+	div.appendChild(alert);
+
 	b1.onclick = function(){
 		//pgproject true means that the buttons are visible
 		if (div.getAttribute("pgproject") != "true") {
@@ -427,27 +466,27 @@ function createDiv(t){
 	b2.onclick = function(){
 		// Encrypt
 		var to = getTo(t);
-		toEventPage("encrypt", tb, to);//encrypt(tb);
+		toEventPage("encrypt", alert, tb, to);//encrypt(tb);
 		hideAllButtons();
 	}
 
 	b3.onclick = function(){
 		// Sign
 		var from = getFrom(t);
-		toEventPage("sign", tb, from);//sign(tb);
+		toEventPage("sign", alert, tb, from);//sign(tb);
 		hideAllButtons();
 	}
 
 	b4.onclick = function(){
 		// Decrypt
 		var from = getFrom(t); // "from" is not the best name
-		toEventPage("decrypt", tb, from);//decrypt(tb);
+		toEventPage("decrypt", alert, tb, from);//decrypt(tb);
 		hideAllButtons();
 	}
 
 	b5.onclick = function(){
 		// Delete signature
-		toEventPage("unsign", tb);//unsign(tb);
+		toEventPage("unsign", alert, tb);//unsign(tb);
 		hideAllButtons();
 	}
 
@@ -488,6 +527,10 @@ function createDivInbox(inbox){
 	// Verify signature
 	var b6 = createButton_b6();
 	div.appendChild(b6);
+
+	// Alert message
+	var alert = createAlert();
+	div.appendChild(alert);
 
 	b1.onclick = function(){
 		//pgproject true means that the buttons are visible
@@ -530,14 +573,14 @@ function createDivInbox(inbox){
 	b4.onclick = function(){
 		// Decrypt
 		var to = getToInbox(inbox); 
-		toEventPage("decrypt", tb, to);
+		toEventPage("decrypt", alert, tb, to);
 		hideAllButtons();
 	}
 
 	b6.onclick = function(){
 		// Verify signature
 		var from = getFromInbox(inbox);
-		toEventPage("verify", tb, from);
+		toEventPage("verify", alert, tb, from);
 		hideAllButtons();
 	}
 

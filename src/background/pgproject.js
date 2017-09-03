@@ -2,7 +2,6 @@
 
 var keyring; //:S
 
-
 function initKeys(){
 
 	/*TO DO
@@ -137,11 +136,10 @@ function encrypt(text, emails){
 	email = emails[0]; // TO DO: MORE THAN ONE EMAIL ADDRESS
 	var pubKeys = getPublicKeysByEmail(email);
 
-	if(debug){
-		console.log("--Encrypting message: " + text);
-	}
-	
-	return openpgp.encryptMessage(pubKeys, text)
+	return openpgp.encryptMessage(pubKeys, text)/*.catch(function(error) {
+		//console.log(error);
+		//return false
+	})*/
 }
 
 /* TO DO:

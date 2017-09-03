@@ -75,7 +75,12 @@ chrome.runtime.onMessage.addListener(
 	    		if (debug) {
 					console.log("--EP response OK +  " + pgpmessage);
 				}
-	    		sendResponse({msg: "OK", cnt: pgpmessage});
+		    		sendResponse({msg: "OK", cnt: pgpmessage});
+			}, function(error) {
+				if (debug) {
+					console.log("--"+ error);
+				}
+				sendResponse({msg: error+"", cnt: undefined}); // TODO: Parsing "error" to send a better "alert"
 			});
 			break;
 		case "sign":
@@ -84,6 +89,11 @@ chrome.runtime.onMessage.addListener(
 					console.log("--EP response OK +  " + pgpmessage);
 				}
 	    		sendResponse({msg: "OK", cnt: pgpmessage});
+			}, function(error) {
+				if (debug) {
+					console.log("--"+ error);
+				}
+				sendResponse({msg: error+"", cnt: undefined}); // TODO: Parsing "error" to send a better "alert"
 			});
 			break;
 		case "decrypt":
@@ -92,6 +102,11 @@ chrome.runtime.onMessage.addListener(
 					console.log("--EP response OK +  " + plaintext);
 				}
 	    		sendResponse({msg: "OK", cnt: plaintext});
+			}, function(error) {
+				if (debug) {
+					console.log("--"+ error);
+				}
+				sendResponse({msg: error+"", cnt: undefined}); // TODO: Parsing "error" to send a better "alert"
 			});
 			break;
 		case "unsign":
@@ -116,22 +131,25 @@ chrome.runtime.onMessage.addListener(
 			    	}>
 			    }*/
 
-			    var veriText;
+			    var alert;
 			    // only for one signature
 			    if(response.signatures[0].valid == true){
-			    	veriText = "Signature verified -\n\n";
+			    	alert = "Signature verified";
 			    } else{
-			    	veriText = "Unable to verify signature -\n\n";
+			    	alert = "Unable to verify signature";
 			    }
 
-				var plaintext = veriText + response.text;
-
 				if (debug) {
-					console.log("--EP response OK +  " + plaintext);
+					console.log("--EP response OK +  " + response.text);
 				}
 
-	    		sendResponse({msg: "OK", cnt: plaintext});
+	    		sendResponse({msg: alert, cnt: response.text});
 
+			}, function(error) {
+				if (debug) {
+					console.log("--"+ error);
+				}
+				sendResponse({msg: error+"", cnt: undefined}); // TODO: Parsing "error" to send a better "alert"
 			});
 			break;
 		case "generateKey":

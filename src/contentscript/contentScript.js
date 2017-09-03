@@ -34,7 +34,7 @@ window.onload = function() {
 
 
 // messages to the eventPage
-function toEventPage(message, alert, textbox, emails){
+function toEventPage(message, alert, textbox, bar, emails){
 	
 	var cnt = null;
 	if(textbox){
@@ -52,15 +52,20 @@ function toEventPage(message, alert, textbox, emails){
 				replace(textbox, response.cnt);
 				replace(alert,"");
 				alert.style.color = "unset";
-			} //else
+				bar.style.background = color;
+			} // else
 		} else if (response.msg == "Signature verified") {
 			if (response.cnt) {
 				replace(textbox, response.cnt);
 				replace(alert,response.msg);
-				alert.style.color = "green";
+				//alert.style.color = "green";
+				bar.style.background = "darkseagreen";
+				alert.style.color = "snow";
 			} //else
 		}else {
-			alert.style.color = "red";
+			//alert.style.color = "red";
+			bar.style.background = "indianred";
+			alert.style.color = "snow";
 			replace(alert,response.msg);
 		}
 
@@ -97,7 +102,7 @@ window.addEventListener("click",function(){
 	for (i = 0; i< tbTablesList.length; i++){
 		
 		t = tbTablesList[i];
-		t.style.backgroundColor = color;
+		//t.style.backgroundColor = color;
 
 		// pgproject indicates when the button already exists in this table
 		// (it's a string)
@@ -388,6 +393,11 @@ function createDiv(t){
 	var div = document.createElement("div");
 	div.type = "div";
 	div.className = "pgproject_tb_bar"
+	div.style.backgroundColor = color;
+	div.style.height = "29px";
+	//div.style.marginBottom = "10px";
+	//div.style.borderBottomStyle = "inset";
+    //div.style.borderBottomWidth = "thin";
 
 	// PGProject
 	var b1 = createButton_b1();
@@ -466,27 +476,27 @@ function createDiv(t){
 	b2.onclick = function(){
 		// Encrypt
 		var to = getTo(t);
-		toEventPage("encrypt", alert, tb, to);//encrypt(tb);
+		toEventPage("encrypt", alert, tb, div, to);//encrypt(tb);
 		hideAllButtons();
 	}
 
 	b3.onclick = function(){
 		// Sign
 		var from = getFrom(t);
-		toEventPage("sign", alert, tb, from);//sign(tb);
+		toEventPage("sign", alert, tb, div, from);//sign(tb);
 		hideAllButtons();
 	}
 
 	b4.onclick = function(){
 		// Decrypt
 		var from = getFrom(t); // "from" is not the best name
-		toEventPage("decrypt", alert, tb, from);//decrypt(tb);
+		toEventPage("decrypt", alert, tb, div, from);//decrypt(tb);
 		hideAllButtons();
 	}
 
 	b5.onclick = function(){
 		// Delete signature
-		toEventPage("unsign", alert, tb);//unsign(tb);
+		toEventPage("unsign", alert, tb, div);//unsign(tb);
 		hideAllButtons();
 	}
 
@@ -509,6 +519,9 @@ function createDivInbox(inbox){
 	div.type = "div";
 	div.className = "pgproject_inbox_bar";
 	div.style.backgroundColor = color;
+	div.style.marginBottom = "10px";
+	div.style.borderBottomStyle = "inset";
+    div.style.borderBottomWidth = "thin";
 
 
 	div.style.height = "29px"; //using the 25x25 icon
@@ -573,14 +586,14 @@ function createDivInbox(inbox){
 	b4.onclick = function(){
 		// Decrypt
 		var to = getToInbox(inbox); 
-		toEventPage("decrypt", alert, tb, to);
+		toEventPage("decrypt", alert, tb, div, to);
 		hideAllButtons();
 	}
 
 	b6.onclick = function(){
 		// Verify signature
 		var from = getFromInbox(inbox);
-		toEventPage("verify", alert, tb, from);
+		toEventPage("verify", alert, tb, div, from);
 		hideAllButtons();
 	}
 
@@ -604,10 +617,9 @@ function insertDivInbox(i){
 
 	parent.insertBefore(div,reference);
 
-	reference.style.backgroundColor = "white";
 	reference.style.marginLeft = "1px";
 	reference.style.marginRight = "1px";
-	parent.style.backgroundColor = color;
+	//parent.style.backgroundColor = color;
 }
 
 function getTbFromTbTable(tbTable) {

@@ -43,13 +43,13 @@ function generateKeyring(){
 function newKeyPair(keyring,username,mail,passphrase){
 
 	/*var options = {
-		numBits: 2048,
+		numBits: 2048, //4096
 		userId: 'Test User <testuser@testserver.com>',
 		passphrase: 'abcd1234567890'
 	};*/
 
 	var options = {
-		numBits: 4096,
+		numBits: 2048,
 		userId: username + ' <' + mail +'>',
 		passphrase: passphrase
 	};

@@ -4,14 +4,6 @@ var keyring; //:S
 
 function initKeys(){
 
-	/*TO DO
-
-	-initKeys
-	if keyring = undefined, generate keyring (import saved keys)
-	if there isn't any key, do something
-
-	*/
-
 	if (debug){
 		console.log("Initializing keyring");
 	}
@@ -21,10 +13,6 @@ function initKeys(){
 		keyring = generateKeyring();
 	}
 
-	// testing. newKeyPair function must be called from a form in a configuration page
-	//keyring.clear();
-	//newKeyPair(keyring,'Test User', 'testuser@testserver.com', 'abcd1234567890');
-	
 }
 
 // create keyring and import keys from localstore
@@ -33,7 +21,6 @@ function generateKeyring(){
 	
 	if (debug){
 		console.log("--generateKeyRing");
-		console.log(keyring);
 		console.log(keyring.getAllKeys());
 	}
 
@@ -121,7 +108,6 @@ function getPrivateKeysByEmail(email, password){
 	for(i=0;i<keys.length;i++){
 		keys[i].decrypt(password);
 	}
-	//keys.map(decrypt(password));
 
 	return keys;
 }

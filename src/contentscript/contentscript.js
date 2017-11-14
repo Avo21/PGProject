@@ -5,35 +5,21 @@ var gmail_inbox_class = "adn ads";
 var color = "LightSteelBlue";
 
 var debug = true;
-//var keyring;
 
 
 
-//temporal, could be done in the eventPage
+//could be done in the eventPage?
 window.onload = function() {
 	
 	// Icons stylesheet
 	loadIconsStyle();
 
-
-
-	toEventPage("initKeys"); //TO DO
+	toEventPage("initKeys");
 	
-	/*
-	// Keys
-	if (keyring == undefined) {
-		keyring = generateKeyring();
-	}
-
-	// testing. newKeyPair function must be called from a form in a configuration page
-	keyring.clear();
-	newKeyPair(keyring);
-	*/
-
 }
 
 
-// messages to the eventPage
+// send messages to the eventPage
 function toEventPage(message, alert, textbox, bar, emails){
 	
 	var cnt = null;
@@ -44,7 +30,6 @@ function toEventPage(message, alert, textbox, bar, emails){
 	chrome.runtime.sendMessage({msg: message, cnt: cnt, emails: emails}, function(response){
 		if (debug) {
 			console.log("Message [" + message + "] sent from CS to EP");
-			//console.log("--response from EP: " + response.msg);
 		}
 
 		if (response.msg == "OK"){
@@ -69,13 +54,11 @@ function toEventPage(message, alert, textbox, bar, emails){
 			replace(alert,response.msg);
 		}
 
-
-		//return response.cnt;
 	})
 }
 
 function replace(tb, resp){
-	tb.innerText = resp;//resp.cnt;
+	tb.innerText = resp;
 }
 
 function loadIconsStyle(){
@@ -129,8 +112,7 @@ window.addEventListener("click",function(){
 
 
 
-/////// interacting with the website (old HTML.js)
-
+/////// interacting with the website
 
 function getTbTables(tbTable_class){
 	tbTablesList = document.getElementsByClassName(tbTable_class);
@@ -199,20 +181,19 @@ function createButton_b1(){
 }
 
 // Encrypt button
-function createButton_b2(){
+//function createButton_b2(){
+function createButton_encrypt(){
 	button = document.createElement("button");
-	button.className = "pgproject_b2"
 	button.type = "button";
 	button.title = "Cifrar";
 	button.style.float = "right";
 	button.style.display = "none";
-
 	button.style.fontSize = "x-large";
     button.style.background = "inherit";
     button.style.border = "none";
     button.style.paddingTop = "2px";
 
-	//button.innerText = "Cifrar";
+	//icon
 	button.innerHTML = '<i class="fa fa-lock"></i>';
 
 	button.onmouseover = function(){
@@ -389,20 +370,16 @@ function createDiv(t){
 
 	var tb = getTbFromTbTable(t);
 
-
 	var div = document.createElement("div");
 	div.type = "div";
 	div.className = "pgproject_tb_bar"
 	div.style.backgroundColor = color;
 	div.style.height = "29px";
-	//div.style.marginBottom = "10px";
-	//div.style.borderBottomStyle = "inset";
-    //div.style.borderBottomWidth = "thin";
 
 	// PGProject
 	var b1 = createButton_b1();
 	div.appendChild(b1);
-
+	
 	// Options
 	var bOptions = createButton_opt();
 	div.appendChild(bOptions);
@@ -416,7 +393,7 @@ function createDiv(t){
 	div.appendChild(b5);
 
 	// Encrypt
-	var b2 = createButton_b2();
+	var b2 = createButton_encrypt();
 	div.appendChild(b2);
 
 	// Decrypt
@@ -434,7 +411,7 @@ function createDiv(t){
 	div.appendChild(alert);
 
 	b1.onclick = function(){
-		//pgproject true means that the buttons are visible
+		//true means that the buttons are visible
 		if (div.getAttribute("pgproject") != "true") {
 			//buttons are hidden
 
@@ -448,10 +425,6 @@ function createDiv(t){
 				case "encrypted":
 					b3.style.display = "flex";
 					b4.style.display = "flex";
-					break;
-				case "signed+encrypted": // check how works this option
-					b4.style.display = "flex";
-					b5.style.display = "flex";
 					break;
 				case "plain":
 					b2.style.display = "flex";
@@ -619,7 +592,6 @@ function insertDivInbox(i){
 
 	reference.style.marginLeft = "1px";
 	reference.style.marginRight = "1px";
-	//parent.style.backgroundColor = color;
 }
 
 function getTbFromTbTable(tbTable) {
@@ -631,11 +603,10 @@ function getTbFromTbTable(tbTable) {
 	}
 
 	return tb;
-	//return tb.innerText;
 }
 
 
-///// about encryption (old PGP.js)
+///// about encryption
 
 
 /* TO DO:
@@ -771,8 +742,6 @@ function text_is(text){
 // Textbox could be the element with class "I5" in this and getFrom functions
 function getTo(textbox){
 
-	//var textbox = document.getElementsByClassName("cf An");
-	//x = textbox[0]; // ONLY FOR ONE TEXTBOX
 	var x = textbox;
 
 	var tag = x.className;

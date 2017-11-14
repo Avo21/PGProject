@@ -9,7 +9,7 @@
   "content_scripts": [
 	  {
 	  	"matches": ["https://mail.google.com/mail/*"],
-	  	"js": ["contentscript/contentScript.js"]
+	  	"js": ["contentscript/contentscript.js"]
 	  }
   ],
 
@@ -19,7 +19,9 @@
 
   "web_accessible_resources": [
     "images/*.png",
-    "options/options.html"
+    "options/options.html",
+    "options/options.js",
+    "options/options.css"
   ],
 
   "options_ui": {
@@ -29,8 +31,8 @@
 
   "background": {
     "scripts": [
-      "background/eventPage.js",
-      "background/pgproject.js",
+      "background/eventpage.js",
+      "background/model.js",
       "openpgp/openpgp.js"],
     "persistent": false
   }

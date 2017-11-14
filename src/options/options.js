@@ -69,85 +69,6 @@ function leftMenu(){
 	});
 }
 
-//TO DO
-function getPublicKeys(){ // NOT IN USE
-
-/*
-<div class="keyPart name">Test User</div>
-<div class="keyPart mail">testuser@testserver.com</div>
-<div class="keyPart publicKey"> <a href="foo">See public key</a> </div>
-
-<div class="valid"></div>
-<div class="trust"></div>
-*/
-
-	/*
-	var sampleKey1 = {
-		name : "Eric Clapton",
-		mail : "eric@gmail.com",
-		publicKey : "public key eric"
-	}
-
-	var sampleKey2 = {
-		name : "Bob Dylan",
-		mail : "bob@gmail.com",
-		publicKey : "public key bob"
-	}
-
-	var sampleKey3 = {
-		name : "Bruce Springsteen",
-		mail : "bruce@gmail.com",
-		publicKey : "public key bruce"
-	}
-
-	keys = [sampleKey1,sampleKey2,sampleKey3];
-	*/
-
-	////////////// real getPublicKeys
-
-
-	// message to the eventPage asking for public keys
-	chrome.runtime.sendMessage({msg: "getPublicKeys"}, function(response) {
-		// TO DO: Handle the response
-		console.log("Options> Public keys received.");
-
-		var pubKeys = response.cnt;
-		
-
-		/*	
-		for(i=0;i<pubKeys.length;i++){
-			console.log(i+">> ");
-			console.log(pubKeys[i].userId);
-			console.log(pubKeys[i].key);
-		}*/
-
-		console.log('-----------------RETURN');
-		return pubKeys;
-		
-	});
-
-	console.log('-----------------CACA');
-
-
-
-
-	//return keys;
-}
-
-//TO DO
-function getPrivateKeys(){ // NOT IN USE
-
-	var sampleKey1 = {
-		name : "Eric Clapton",
-		mail : "eric@gmail.com",
-		privateKey : "private key eric"
-	}
-
-	keys = [sampleKey1];
-
-	return keys;
-}
-
 function loadPublicKey(key){
 
 	var divKey = document.createElement("div");
@@ -239,7 +160,6 @@ function loadPrivateKey(key){
 }
 
 function loadPublicKeys(){
-	//keys = getPublicKeys();
 
 	var pubKeys = document.getElementById("publicKeys");
 	var old = pubKeys.children;
@@ -461,18 +381,6 @@ window.onload = function(){
 	});
 
 	leftMenu();
-	//loadPublicKeys();
-	//loadPrivateKeys();
-
 	rightMenu();
-
-/*
--show keys
-show the keys in the keyring
-
--add key
-ask for information or import key
-add to the keyring
-*/
 
 }

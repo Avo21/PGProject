@@ -82,19 +82,19 @@ function loadPublicKey(key){
 
 	var divShow = document.createElement("div");
 	divShow.className = "show";
-	divShow.innerText = "Show key";
+	divShow.innerText = "Ver clave";
 	divShow.id = "PUB_SHOW_"+key.userId; //Not sure if using the userid is a good idea
 
 	function toggle(s_id, k_id){
 		var s = document.getElementById(s_id);
 		var k = document.getElementById(k_id);
 
-		if(s.innerText == "Show key"){
+		if(s.innerText == "Ver clave"){
 			k.style.display = "flex";
-			s.innerText = "Hide key";
+			s.innerText = "Ocultar clave";
 		}else{
 			k.style.display = "none";
-			s.innerText = "Show key";
+			s.innerText = "Ver clave";
 		}
 	}
 
@@ -128,19 +128,19 @@ function loadPrivateKey(key){
 
 	var divShow = document.createElement("div");
 	divShow.className = "show";
-	divShow.innerText = "Show key";
+	divShow.innerText = "Ver clave";
 	divShow.id = "PRIV_SHOW_"+key.userId; //Not sure if using the userid is a good idea
 
 	function toggle(s_id, k_id){
 		var s = document.getElementById(s_id);
 		var k = document.getElementById(k_id);
 
-		if(s.innerText == "Show key"){
+		if(s.innerText == "Ver clave"){
 			k.style.display = "flex";
-			s.innerText = "Hide key";
+			s.innerText = "Ocultar clave";
 		}else{
 			k.style.display = "none";
-			s.innerText = "Show key";
+			s.innerText = "Ver clave";
 		} 
 	}
 

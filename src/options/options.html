@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PGProject Options</title>
+  <title>Xeild Options</title>
 
   <link rel="stylesheet" type="text/css" href="options.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -14,13 +14,13 @@
 
       <div class="menu">
         <div id="optionabout" class="option">
-          <p>About</p>
+          <p>Inicio</p>
         </div>
         <div id="optionkeys" class="option">
-          <p>Keys</p>
+          <p>Claves</p>
         </div>
         <div id="optionconf" class="option">
-          <p>Configuration</p>
+          <p>Configuración</p>
         </div>
       </div>
 
@@ -31,24 +31,24 @@
     <div class="right">
 
       <div id="about" class="about">
-        <p><h1>About <b>PGProject</b></h1></p>
+        <p><h1>Acerca de <b>Xeild</b></h1></p>
         <p>
-          PGProject is a Google Chrome extension to use OpenPGP in Gmail straight from the browser, allowing you to easily work with encrypted and signed emails. The software is currently in pre-alpha phase while its functionality is still under development.
+          Xeild é una extensión de Google Chrome para usar OpenPGP en Gmail directamente desde o navegador, permitíndoche traballar de forma simple con correo cifrado e firmado. De momento, o programa está en fase alfa mentras a súa funcionalidade segue en desenvolvemento.
         </p>
         <br>
-        <p><h1>License</h1></p>
+        <p><h1>Licenza</h1></p>
         <p>
-          PGProject is licensed under the <a href="https://github.com/Avo21/PGProject/blob/master/LICENSE">GNU GPLv2</a>.
+          Xeild é compartido libremente baixo a licenza <a href="https://github.com/Avo21/PGProject/blob/master/LICENSE">GNU GPLv2</a>.
         </p>
         <br>
-        <p><h1>Author</h1></p>
+        <p><h1>Autor</h1></p>
         <p>
-          The software is being developed as a personal project by <a href="https://github.com/Avo21">Álvaro F. Faílde</a>.
+          O <i>software</i> está sendo desenvolvido coma un proxecto persoal por <a href="https://github.com/Avo21">Álvaro F. Faílde</a>.
         </p>
         <br>
-        <p><h1>Contact</h1></p>
+        <p><h1>Contacto</h1></p>
         <p>
-          If you find some security bug or you have any questions or suggestions, please contact me:
+          Se atopas algún <i>bug</i> na seguridade da extensión, ou tes algunha pregunta ou suxerencia, por favor contacta conmigo:
           <br>
           <div id="contact">
             <i class="fa fa-envelope-o"></i> alvaro.failde@gmail.com
@@ -60,33 +60,33 @@
 
       <div id="keys" class="keys">
 
-        <div id="kmanager"> <h1>Keys manager</h1>
+        <div id="kmanager"> <h1>Xestor de claves</h1>
           <p class="info">
-            Keys are needed for all the encryption functionality. You need to own at least a public and a private key in order to start using the app.
+            As claves son necesarias para todas as funcións de cifrado. Necesitas ter como mínimo unha clave pública e unha clave privada para comezar a utilizar a aplicación.
           </p>
-          <button class="button" id="genKey">Generate my keys</button>
-          <button class="button" id="impPrivKey">Import my keys</button>
-          <button class="button" id="impPubKey">Import public key</button>
+          <button class="button" id="genKey">Xerar as miñas claves</button>
+          <button class="button" id="impPrivKey">Importar as miñas claves</button>
+          <button class="button" id="impPubKey">Importar clave pública</button>
           <!-- <button class="button" id="importkey">Import contact key</button> -->
           <br>
           <div id="generatekey" class="kmanager" style="display: none;">
-            <input class="inputkey" type="text" name="name" placeholder="Name"></input>
-            <input id="inputemail" class="inputkey" type="text" name="email" placeholder="Email address"></input>
+            <input class="inputkey" type="text" name="name" placeholder="Nome"></input>
+            <input id="inputemail" class="inputkey" type="text" name="email" placeholder="Dirección de email"></input>
             <input class="inputkey" type="password" name="pass" placeholder="Passphrase" ></input>
-            <button id="submit_gen" class="button submit_key">Generate!</button>
+            <button id="submit_gen" class="button submit_key">Xerar!</button>
           </div>
           <div id="importPub" class="importkey kmanager" style="display: none;">
-            <textarea id="armoredPub" class="inputkey" type="text" name="armoredkey" placeholder="Public key"></textarea>
-            <button id="submit_pub" class="button submit_key">Import!</button>
+            <textarea id="armoredPub" class="inputkey" type="text" name="armoredkey" placeholder="Clave pública"></textarea>
+            <button id="submit_pub" class="button submit_key">Importar!</button>
           </div>
           <div id="importPriv" class="importkey kmanager" style="display: none;">
-            <textarea id="armoredPriv" class="inputkey" type="text" name="armoredkey" placeholder="Private key"></textarea>
-            <button id="submit_priv" class="button submit_key">Import!</button>
+            <textarea id="armoredPriv" class="inputkey" type="text" name="armoredkey" placeholder="Clave privada"></textarea>
+            <button id="submit_priv" class="button submit_key">Importar!</button>
           </div>
         </div>
 
 
-        <p><h1>Public keys</h1></p>
+        <p><h1>Claves públicas</h1></p>
         <!-- Manage keys:
           Public keys: List, add, remove...
           Private keys: List, add (import or create), remove... -->
@@ -103,7 +103,7 @@
         </div>
         
         <br>
-        <p><h1>Private keys</h1></p>
+        <p><h1>Claves privadas</h1></p>
         <div class="keysList private" id="privateKeys">
 
           <!-- <div class="key">
@@ -119,16 +119,16 @@
       <div id="configuration" class="configuration">
         <p><h1>Passphrase</h1></p>
         <p>
-          Enter here the secret <b>passphrase</b> of your private key, so you can be able to <b>sign</b> and <b>decrypt</b> emails.
+          Introduce aquí a frase de contrasinal ou <i><b>passphrase</b></i> da túa clave privada, para poder <b>firmar</b> e <b>descifrar</b> <i>emails</i>.
         </p>
 
         <div id="introPass" class="introPass" style="display: flex;">
             <input id="inputpass" type="password" placeholder="Passphrase" style="margin-right: 3px"></input>
-            <button id="submit_pass" class="button">Save</button>
+            <button id="submit_pass" class="button">Gardar</button>
         </div>
 
         <p class="info">
-            Due to security reasons, your passphrase will be locally stored only during your session. It will be removed when you close your browser window.
+            Por motivos de seguridade, a túa <i>passphrase</i> será gardada de forma local soamente durante esta sesión e eliminada cando cerres a ventá do navegador.
         </p>
 
         <!--<p>

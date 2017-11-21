@@ -4,7 +4,7 @@ var gmail_inbox_class = "adn ads";
 
 var color = "LightSteelBlue";
 
-var debug = true;
+var debug = false;
 
 
 
@@ -69,14 +69,10 @@ function loadIconsStyle(){
 }
 
 
-// temporal, must be done in a better way, and maybe in the eventPage
 window.addEventListener("click",function(){
 	if (debug){
 		console.log("click")
 	}
-
-
-
 
 	tbTablesList = getTbTables(gmail_textbox_table_class);
 	inboxList = getInbox(gmail_inbox_class);
@@ -85,7 +81,6 @@ window.addEventListener("click",function(){
 	for (i = 0; i< tbTablesList.length; i++){
 		
 		t = tbTablesList[i];
-		//t.style.backgroundColor = color;
 
 		// pgproject indicates when the button already exists in this table
 		// (it's a string)
@@ -140,7 +135,6 @@ function createButton_opt(){
     button.style.border = "none";
     button.style.paddingTop = "2px";
 
-	//button.innerText = "Options";
 	button.innerHTML = '<i class="fa fa-cog"></i>';
 
 	button.onmouseover = function(){
@@ -151,10 +145,7 @@ function createButton_opt(){
 	}
 
 	button.onclick = function(){
-
-
 		toEventPage("optionsPage");
-
 	}
 
 	return button;
@@ -181,7 +172,6 @@ function createButton_b1(){
 }
 
 // Encrypt button
-//function createButton_b2(){
 function createButton_encrypt(){
 	button = document.createElement("button");
 	button.type = "button";
@@ -274,7 +264,6 @@ function createButton_b5(){
     button.style.border = "none";
     button.style.paddingTop = "2px";
 	
-	//button.innerText = "Eliminar firma";
 	button.innerHTML = '<i class="fa fa-share-square-o"></i>';
 
 	button.onmouseover = function(){
@@ -301,7 +290,6 @@ function createButton_b6(){
     button.style.border = "none";
     button.style.paddingTop = "2px";
 	
-	//button.innerText = "Verificar firma";
 	button.innerHTML = '<i class="fa fa-pencil-square"></i>';
 	//button.innerHTML = '<i class="fa fa-check-square-o"></i>';
 
@@ -315,26 +303,6 @@ function createButton_b6(){
 	return button;
 }
 
-/* PROBLEM WITH FOCUS...
-// Password input
-function createPassw(){
-	bPass = document.createElement("input");
-	bPass.className = "inputkey"
-	bPass.type = "password";
-	bPass.title = "Password";
-	bPass.placeholder="Passphrase"
-	bPass.style.float = "right";
-	bPass.style.display = "flex";//"none";
-	
-	//bPass.style.fontSize = "x-large";
-    //bPass.style.background = "inherit";
-    bPass.style.border = "none";
-    //bPass.style.paddingTop = "1px";
-
-	return bPass;
-}
-*/
-
 // Alert messages
 function createAlert(){
 	alert = document.createElement("div");
@@ -344,13 +312,8 @@ function createAlert(){
 	alert.style.display = "flex"; //none
 
 	alert.style.fontSize = "small";
-    //alert.style.background = "inherit";
     alert.style.paddingTop = "5px";
     alert.style.paddingLeft = "5px";
-    //alert.style.color = "red"; //unset
-
-    //alert.innerText = "Bla bla bla bla";
-
 	
 	return alert;
 }
@@ -400,12 +363,6 @@ function createDiv(t){
 	var b4 = createButton_b4();
 	div.appendChild(b4);
 
-	/*
-	// Password
-	var bPass = createPassw();
-	//div.appendChild(bPass);
-	*/
-
 	// Alert message
 	var alert = createAlert();
 	div.appendChild(alert);
@@ -413,8 +370,8 @@ function createDiv(t){
 	b1.onclick = function(){
 		//true means that the buttons are visible
 		if (div.getAttribute("pgproject") != "true") {
+			
 			//buttons are hidden
-
 			bOptions.style.display = "flex";
 
 			switch(text_is(tb.innerText)){
@@ -449,27 +406,27 @@ function createDiv(t){
 	b2.onclick = function(){
 		// Encrypt
 		var to = getTo(t);
-		toEventPage("encrypt", alert, tb, div, to);//encrypt(tb);
+		toEventPage("encrypt", alert, tb, div, to);
 		hideAllButtons();
 	}
 
 	b3.onclick = function(){
 		// Sign
 		var from = getFrom(t);
-		toEventPage("sign", alert, tb, div, from);//sign(tb);
+		toEventPage("sign", alert, tb, div, from);
 		hideAllButtons();
 	}
 
 	b4.onclick = function(){
 		// Decrypt
-		var from = getFrom(t); // "from" is not the best name
-		toEventPage("decrypt", alert, tb, div, from);//decrypt(tb);
+		var from = getFrom(t);
+		toEventPage("decrypt", alert, tb, div, from);
 		hideAllButtons();
 	}
 
 	b5.onclick = function(){
 		// Delete signature
-		toEventPage("unsign", alert, tb, div);//unsign(tb);
+		toEventPage("unsign", alert, tb, div);
 		hideAllButtons();
 	}
 
@@ -521,8 +478,8 @@ function createDivInbox(inbox){
 	b1.onclick = function(){
 		//pgproject true means that the buttons are visible
 		if (div.getAttribute("pgproject") != "true") {
+			
 			//buttons are hidden
-
 			bOptions.style.display = "flex";
 
 			switch(text_is(tb.innerText)){
@@ -532,12 +489,12 @@ function createDivInbox(inbox){
 				case "encrypted":
 					b4.style.display = "flex";
 					break;
-				case "signed+encrypted": // check how works this option
+				case "signed+encrypted": // to do
 					b4.style.display = "flex";
 					b6.style.display = "flex";
 					break;
 				case "plain":
-					// to do
+					//
 					break;
 				default:
 					// error
@@ -550,8 +507,7 @@ function createDivInbox(inbox){
 			div.setAttribute("pgproject", "true");
 		
 		} else {
-			//buttons are visible	
-
+			//buttons are visible
 			hideAllButtons();
 		}
 	}
@@ -718,13 +674,13 @@ function isEncrypted(text){
 	return false;
 }
 
-// TO DO: Signed and Encrypted
+
 function text_is(text){
 
 	if (isEncrypted(text)){
 		if (isSigned(text)){
 			//signed + encrypted
-			return "signed+encrypted"; //Check how works signing and encrypting
+			return "signed+encrypted"; //to do
 		} else {
 			//encrypted
 			return "encrypted";

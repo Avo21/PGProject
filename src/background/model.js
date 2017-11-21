@@ -1,6 +1,6 @@
 //////// about encryption (old PGP.js)
 
-var keyring; //:S
+var keyring;
 
 function initKeys(){
 
@@ -128,17 +128,11 @@ function encrypt(text, emails){
 	})*/
 }
 
-/* TO DO:
-it introduces one line break before signed text (delete it)
-email and password by parameter
-more than one email address
-error
-*/
 function sign(text, email){
 	// signClearMessage(privateKeys, text)
 
 	//email = "testuser@testserver.com";
-	//password = "abcd1234567890"; //TO DO: send password from Content Script
+	//password = "abcd1234567890";
 	var password = sessionStorage.getItem('psph');
 
 	if(debug){
@@ -154,15 +148,10 @@ function sign(text, email){
 	return openpgp.signClearMessage(privKeys, text)
 }
 
-/* TO DO:
-email and password by parameter
-more than one email address
-error
-*/
 function decrypt(pgpMessage, emails){
 	
 	//email = "testuser@testserver.com";
-	//password = "abcd1234567890"; //TO DO: send password from Content Script
+	//password = "abcd1234567890";
 	var password = sessionStorage.getItem('psph');
 	email = emails[0];
 
@@ -177,24 +166,8 @@ function decrypt(pgpMessage, emails){
 	pgpMessage = openpgp.message.readArmored(pgpMessage);
 	
 	return openpgp.decryptMessage(privKey, pgpMessage);
-
-
-/*
-//////////// 
-	openpgp.decryptMessage(privKey, pgpMessage).then(function(plaintext) {
-	    // success
-	    textbox.innerText = plaintext; // TO DO: SEND MESSAGE TO CONTENT SCRIPT
-
-	}).catch(function(error) {
-	    // failure
-	    // TO DO
-
-	    if(debug){
-	    	console.log("Error: decrypting message");
-	    }
-	});
-*/
 }
+
 
 function unsign(pgpMessage){
 
@@ -208,62 +181,14 @@ function unsign(pgpMessage){
 
 }
 
-/* TO DO:
-veriText could be in the pgproject div
-veriText could indicate the emails verified in the signature - verify icon in green?
-email by parameter
-more than one email address
-error
-*/
 function verify(pgpMessage, email){
 
 	//email = "testuser@testserver.com";
-	//email = emails[0]; //
 	var pubKeys = getPublicKeysByEmail(email);
 
 	pgpMessage = openpgp.cleartext.readArmored(pgpMessage);
 
 	return openpgp.verifyClearSignedMessage(pubKeys, pgpMessage);
-
-	/*
-	openpgp.verifyClearSignedMessage(pubKeys, pgpMessage).then(function(response) {
-	    // success
-	    
-	    
-	    //response = {
-	    //	Promise<{
-	    //		text: String,
-	    //		signatures: Array<{
-	    //			keyid: module:type/keyid,
-	    //			valid: Boolean
-	    //		}>
-	    //	}>
-	    //}
-	    
-
-	    var veriText;
-	    // only for one signature
-	    if(response.signatures[0].valid == true){
-	    	veriText = "Signature verified -\n\n";
-	    } else{
-	    	veriText = "Unable to verify signature -\n\n";
-	    }
-
-		textbox.innerText = veriText + response.text; // TO DO: SEND MESSAGE TO CONTENT SCRIPT
-
-	    
-
-
-
-	}).catch(function(error) {
-	    // failure
-	    // TO DO
-
-	    if(debug){
-	    	console.log("Error: encrypting message");
-	    }
-	});
-	*/
 }
 
 //TO DO: not using the global variable keyring
@@ -287,7 +212,7 @@ function getPublicKeys(){
 //TO DO: not using the global variable keyring
 function getPrivateKeys(){
 
-	var privKeys = keyring.privateKeys.keys
+	var privKeys = keyring.privateKeys.keys;
 
 	var response = [];
 		

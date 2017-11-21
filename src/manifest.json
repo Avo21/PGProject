@@ -1,8 +1,8 @@
 {
- "name": "PGProject",
+ "name": "Xeild PGP",
  "version": "0.3",
- "version_name": "pre-alpha",
- "description": "PGP in Gmail straight from your browser! PGProject allows you to encrypt and sign your mails.",
+ "version_name": "alpha",
+ "description": "PGP in Gmail straight from your browser! Xeild PGP allows you to encrypt and sign your mails.",
 
  "manifest_version": 2,
 

@@ -15,22 +15,6 @@ function save_options() {
     }, 750);
   });
 }
-
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
-function restore_options() {
-  // Use default value color = 'red' and likesColor = true.
-  chrome.storage.sync.get({
-    favoriteColor: 'red',
-    likesColor: true
-  }, function(items) {
-    document.getElementById('color').value = items.favoriteColor;
-    document.getElementById('like').checked = items.likesColor;
-  });
-}
-document.addEventListener('DOMContentLoaded', restore_options);
-document.getElementById('save').addEventListener('click',
-    save_options);
 */
 
 function selectOption(leftSel, rightSel, leftX, rightX, leftY, rightY){
@@ -74,7 +58,7 @@ function loadPublicKey(key){
 	var divKey = document.createElement("div");
 	divKey.className = "armored publicKey";
 	divKey.innerText = key.key;
-	divKey.id = "PUB_KEY_"+key.userId; //Not sure if using the userid is a good idea
+	divKey.id = "PUB_KEY_"+key.userId;
 
 	var divUserId = document.createElement("div");
 	divUserId.className = "userId";
@@ -83,7 +67,7 @@ function loadPublicKey(key){
 	var divShow = document.createElement("div");
 	divShow.className = "show";
 	divShow.innerText = "Ver clave";
-	divShow.id = "PUB_SHOW_"+key.userId; //Not sure if using the userid is a good idea
+	divShow.id = "PUB_SHOW_"+key.userId;
 
 	function toggle(s_id, k_id){
 		var s = document.getElementById(s_id);
@@ -120,7 +104,7 @@ function loadPrivateKey(key){
 	var divKey = document.createElement("div");
 	divKey.className = "armored privateKey";
 	divKey.innerText = key.key;
-	divKey.id = "PRIV_KEY_"+key.userId; //Not sure if using the userid is a good idea
+	divKey.id = "PRIV_KEY_"+key.userId;
 
 	var divUserId = document.createElement("div");
 	divUserId.className = "userId";
@@ -129,7 +113,7 @@ function loadPrivateKey(key){
 	var divShow = document.createElement("div");
 	divShow.className = "show";
 	divShow.innerText = "Ver clave";
-	divShow.id = "PRIV_SHOW_"+key.userId; //Not sure if using the userid is a good idea
+	divShow.id = "PRIV_SHOW_"+key.userId;
 
 	function toggle(s_id, k_id){
 		var s = document.getElementById(s_id);
@@ -188,7 +172,6 @@ function loadPublicKeys(){
 }
 
 function loadPrivateKeys(){
-	//keys = getPrivateKeys();
 
 	var privKeys = document.getElementById("privateKeys");
 	var old = privKeys.children;
@@ -276,7 +259,7 @@ function rightMenu(){
 
 		var form = document.getElementById("importPub");
 
-		if(form.style.display == "none"){ //TO DO - Not showing more than one option at time when managing keys
+		if(form.style.display == "none"){
 			close();
 			form.style.display = "block";
 		}else{
@@ -309,7 +292,7 @@ function rightMenu(){
 
 		var form = document.getElementById("importPriv");
 
-		if(form.style.display == "none"){ //TO DO - Not showing more than one option at time when managing keys
+		if(form.style.display == "none"){
 			close();
 			form.style.display = "block";
 		}else{
